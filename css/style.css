@@ -280,12 +280,32 @@ input[type="file"] {
   #signupContainer {
     width: 30%;
   }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
+
+  table tbody:first-child {
+    display: none;
+  }
 }
 
 @media (min-width: 971px) and (max-width: 1129px) {
   #loginContainer,
   #signupContainer {
     width: 35%;
+  }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
+
+  table tbody:first-child {
+    display: none;
   }
 }
 
@@ -294,11 +314,31 @@ input[type="file"] {
   #signupContainer {
     width: 40%;
   }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
+
+  table tbody:first-child {
+    display: none;
+  }
 }
 
 @media (max-width: 799px) {
   #loginContainer,
   #signupContainer {
     width: 80%;
+  }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
+
+  table tbody:first-child {
+    display: none;
   }
 }
