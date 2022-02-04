@@ -1,4 +1,5 @@
 const homeContainer = document.getElementById("home");
+const userList = document.getElementById("userList");
 const userListTable = document.getElementsByTagName("table")[0];
 
 const loginContainer = document.getElementById("loginContainer");
@@ -56,9 +57,14 @@ signupForm.addEventListener("submit", (e) => {
     }
     username.value = "";
     email.value = "";
+    password.value = "";
     phone.value = "";
     address.value = "";
     country.value = "";
+
+    userList.style.display = "flex";
+    signupContainer.style.display = "none";
+
 });
 // END - Sign Up
 
@@ -67,7 +73,6 @@ const loginForm = document.getElementById("login");
 const loginEmail = document.getElementById("loginEmail");
 const loginPassword = document.getElementById("loginPassword");
 const addUserContainer = document.getElementById("addUserContainer");
-const userList = document.getElementById("userList");
 
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -90,8 +95,8 @@ loginForm.addEventListener("submit", (e) => {
 const userData = [];
 const userID = new Map();
 
-function getUsers() {
-    fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?maxRecords=10&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
+async function getUsers() {
+    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?maxRecords=10&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
     .then(response => response.json())
     .then(data => {
         data.records.forEach((record) => {
