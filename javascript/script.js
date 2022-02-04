@@ -84,6 +84,7 @@ loginForm.addEventListener("submit", (e) => {
     if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
         loginContainer.style.display = "none";
         userList.style.display = "flex";
+        getUsers();
     } else {
         alert("Invalid login credentials. Try again.");
     }
@@ -117,8 +118,6 @@ async function getUsers() {
         });
     });
 }
-
-getUsers();
 
 function openaddUser() {
     addUserContainer.style.display = "block";
@@ -176,7 +175,7 @@ function home() {
       <th>Phone</th>
       <th>Address</th>
       <th>Country<i class="fas fa-arrow-up" onclick="sortByCountry()"></i></th>
-      <td>Action</td>
+      <th>Action</th>
     </tr>
   </table>`;
 }
