@@ -1,8 +1,0 @@
-keyTnehojflD4HoP2
-
-<!-- <div>
-          <label for="image" class="imageUpload border-radius"
-            ><i class="fas fa-cloud-upload-alt"></i>Profile image</label
-          >
-          <input type="file" required id="addimage" accept="images/*" />
-        </div> -->
