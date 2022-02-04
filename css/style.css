@@ -274,3 +274,31 @@ input[type="file"] {
 }
 
 /* END - User list */
+
+@media (min-width: 1130px) and (max-width: 1350px) {
+  #loginContainer,
+  #signupContainer {
+    width: 30%;
+  }
+}
+
+@media (min-width: 971px) and (max-width: 1129px) {
+  #loginContainer,
+  #signupContainer {
+    width: 35%;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 970px) {
+  #loginContainer,
+  #signupContainer {
+    width: 40%;
+  }
+}
+
+@media (max-width: 799px) {
+  #loginContainer,
+  #signupContainer {
+    width: 80%;
+  }
+}

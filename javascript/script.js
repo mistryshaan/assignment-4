@@ -2,6 +2,19 @@ const homeContainer = document.getElementById("home");
 const userList = document.getElementById("userList");
 const userListTable = document.getElementsByTagName("table")[0];
 
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    const {email, status, username} = JSON.parse(localStorage.getItem("admin"))[0];
+    if(email === "shaan.mistry@marutitech.com" && status === "true") {
+        homeContainer.style.display = "none";
+        userList.style.display = "flex";
+        getUsers();
+        document.getElementById("userName").innerText = username;
+    } else {
+        homeContainer.style.display = "flex";
+        userList.style.display = "none";
+    }
+} 
+
 const loginContainer = document.getElementById("loginContainer");
 function openLogin() {
     loginContainer.style.display = "block";
@@ -84,6 +97,10 @@ loginForm.addEventListener("submit", (e) => {
     if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
         loginContainer.style.display = "none";
         userList.style.display = "flex";
+        document.getElementById("userName").innerText = adminList[0].username;
+        adminList[0].status = "true";
+        localStorage.setItem("admin", JSON.stringify(adminList));
+        getUsers();
     } else {
         alert("Invalid login credentials. Try again.");
     }
@@ -93,15 +110,12 @@ loginForm.addEventListener("submit", (e) => {
 });
 // END - Login
 const userData = [];
-const userID = new Map();
-
 async function getUsers() {
     await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?maxRecords=10&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
     .then(response => response.json())
     .then(data => {
         data.records.forEach((record) => {
             userData.push(record.fields);
-            userID.set(record.fields.Email, record.id);
             const row = `
             <tr>
                 <td>${record.fields["#"]}</td>
@@ -110,15 +124,13 @@ async function getUsers() {
                 <td>${record.fields.Phone}</td>
                 <td>${record.fields.Address}</td>
                 <td>${record.fields.Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
+                <td onclick="editUser('${record.id}', '${record.fields.Name}', '${record.fields.Email}', '${record.fields.Phone}', '${record.fields.Address}', '${record.fields.Country}')" class="edit">Edit</td>
             </tr>
             `;
             userListTable.innerHTML += row;
         });
     });
 }
-
-getUsers();
 
 function openaddUser() {
     addUserContainer.style.display = "block";
@@ -175,10 +187,13 @@ function home() {
       <th>Email</th>
       <th>Phone</th>
       <th>Address</th>
-      <th>Country<i class="fas fa-arrow-up"></i></th>
-      <td onclick="editUser(this)" class="edit">Edit</td>
+      <th>Country<i class="fas fa-arrow-up" onclick="sortByCountry()"></i></th>
+      <th>Action</th>
     </tr>
   </table>`;
+  const admin = JSON.parse(localStorage.getItem("admin"))[0];
+  admin.status = "false";
+  localStorage.setItem("admin", JSON.stringify([admin]));
 }
 
 function sortByCountry() {
@@ -263,43 +278,41 @@ const updateEmail = document.getElementById("updateemail");
 const updatePhone = document.getElementById("updatephone");
 const updateAddress = document.getElementById("updateaddress");
 const updateCountry = document.getElementById("updatecountry");
-function editUser(e) {
-    let values = e.parentNode.children;
-    updateName.value = values[1].innerText;
-    updateEmail.value = values[2].innerText;
-    updatePhone.value = values[3].innerText;
-    updateAddress.value = values[4].innerText;
-    updateCountry.value = values[5].innerText;
+function editUser(id, name, email, phone, address, country) {
+    updateName.value = name;
+    updateEmail.value = email;
+    updatePhone.value = phone;
+    updateAddress.value = address;
+    updateCountry.value = country;
     updateUserContainer.style.display = "block";
+
+    updateUserForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": "Bearer keyTnehojflD4HoP2",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "fields": {
+                    "Name": `${updateName.value}`,
+                    "Email": `${updateEmail.value}`,
+                    "Phone": `${updatePhone.value}`,
+                    "Address": `${updateAddress.value}`,
+                    "Country": `${updateCountry.value}`
+                }
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            updateUserContainer.style.display = "none";
+            location.reload();
+        })
+        .catch(error => console.log(error))
+    });
 }
 
 function closeUpdateUser() {
     updateUserContainer.style.display = "none";
 }
-
-updateUserForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    console.log(e.target.children[3].children[1].value);
-    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201/${userID.get(e.target.children[2].children[1].value)}`, {
-        method: "PATCH",
-        headers: {
-            "Authorization": "Bearer keyTnehojflD4HoP2",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "fields": {
-                "Name": `${updateName.value}`,
-                "Email": `${updateEmail.value}`,
-                "Phone": `${updatePhone.value}`,
-                "Address": `${updateAddress.value}`,
-                "Country": `${updateCountry.value}`
-            }
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        updateUserContainer.style.display = "none";
-        location.reload();
-    })
-    .catch(error => console.log(error))
-});
