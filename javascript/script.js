@@ -2,6 +2,20 @@ const homeContainer = document.getElementById("home");
 const userList = document.getElementById("userList");
 const userListTable = document.getElementsByTagName("table")[0];
 
+if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+    console.info( "This page is reloaded" );
+    const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
+    if(email === "shaan.mistry@marutitech.com" && status === "true") {
+        userList.style.display = "flex";
+        homeContainer.style.display = "none";
+        document.getElementById("userName").innerText = username;
+        getUsers();
+    } else {
+        userList.style.display = "none";
+        homeContainer.style.display = "flex";
+    }
+}
+
 const loginContainer = document.getElementById("loginContainer");
 function openLogin() {
     loginContainer.style.display = "block";
@@ -84,6 +98,9 @@ loginForm.addEventListener("submit", (e) => {
     if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
         loginContainer.style.display = "none";
         userList.style.display = "flex";
+        adminList[0].status = "true";
+        localStorage.setItem("admin", JSON.stringify([adminList[0]]));
+        document.getElementById("userName").innerText = adminList[0].username;
         getUsers();
     } else {
         alert("Invalid login credentials. Try again.");
@@ -165,8 +182,6 @@ addUserForm.addEventListener("submit", (e) => {
 });
 
 function home() {
-    userList.style.display = "none";
-    homeContainer.style.display = "flex";
     userListTable.innerHTML = `<table>
     <tr>
       <th>#</th>
@@ -178,6 +193,12 @@ function home() {
       <th>Action</th>
     </tr>
   </table>`;
+    userList.style.display = "none";
+    homeContainer.style.display = "flex";
+
+  const admin = JSON.parse(localStorage.getItem("admin"))[0];
+  admin.status = "false";
+  localStorage.setItem("admin", JSON.stringify([admin]));
 }
 
 function sortByCountry() {
@@ -190,17 +211,18 @@ function sortByCountry() {
         return 0;
     });
 
-    userListTable.innerHTML = `<table>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th>Country<i class="fas fa-arrow-up" onclick="removeSort()"></i></th>
-      <th>Action</th>
-      </tr>
-  </table>`;
+    userListTable.innerHTML = 
+    `<table>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Country<i class="fas fa-arrow-up" onclick="removeSort()"></i></th>
+            <th>Action</th>
+        </tr>
+    </table>`;
 
   userData.forEach(current => {
     const row = `
