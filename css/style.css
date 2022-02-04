@@ -1,0 +1,276 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  display: inline-block;
+  width: 100%;
+  padding: 8px;
+  outline: none;
+  border: 1px solid #40189d;
+  font-size: 1.1rem;
+  color: #40189d;
+}
+
+button {
+  width: 100%;
+  padding: 8px;
+  outline: none;
+  border: 1px solid #40189d;
+  font-size: 1.1rem;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Utitlity classes */
+.border-radius {
+  border-radius: 5px;
+}
+
+.fa-arrow-up,
+.fa-arrow-down {
+  cursor: pointer;
+}
+/* END - Utility classes */
+
+#home {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+}
+
+#home button {
+  margin: 0 10px;
+}
+
+#home div {
+  height: 90px;
+  width: 2px;
+  background-color: #40189d;
+}
+
+#loginContainer,
+#signupContainer,
+#addUserContainer,
+#updateUserContainer {
+  display: none;
+  width: 25%;
+  padding: 60px 40px;
+  font-size: 1.1rem;
+  box-shadow: 0 0 10px 10px #eaeaf0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.5s ease-in-out;
+}
+
+#addUserContainer,
+#updateUserContainer {
+  background-color: white;
+}
+
+#login > div,
+#signup > div,
+#addUser > div,
+#updateUser > div {
+  margin-bottom: 2rem;
+}
+
+#login > div:first-child,
+#signup > div:first-child,
+#addUser > div:first-child,
+#updateUser > div:first-child {
+  text-align: right;
+  color: #40189d;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+#login > div:first-child:hover,
+#signup > div:first-child:hover,
+#addUser > div:first-child:hover,
+#updateUser > div:first-child:hover {
+  opacity: 0.8;
+}
+
+#login label,
+#signup label,
+#addUser label,
+#updateUser label {
+  display: block;
+  margin-bottom: 5px;
+  padding: 0 8px;
+}
+
+#signup label:last-child,
+#addUser label:last-child {
+  margin-bottom: 0;
+}
+
+#login > div:last-child {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.imageUpload {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #40189d;
+  padding: 8px !important;
+  cursor: pointer;
+  color: #40189d;
+  margin-bottom: 0 !important;
+}
+
+.imageUpload i {
+  margin-right: 10px;
+}
+
+#loginButton,
+#signupButton,
+#addUserSubmitButton,
+#updateUserSubmitButton,
+#home button {
+  width: auto;
+  padding: 8px 16px;
+  background-color: #40189d;
+  color: white;
+  cursor: pointer;
+}
+
+#signupButton,
+#addUserSubmitButton,
+#updateUserSubmitButton {
+  width: 100%;
+}
+
+#forgetPasswordLink {
+  color: #40189d;
+}
+
+/* User list */
+#userList {
+  width: 70%;
+  margin: auto;
+  padding: 40px 20px;
+  display: none;
+  flex-direction: column;
+}
+
+#userList > div:first-child {
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+}
+
+#userImage {
+  margin-right: 10px;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(160, 160, 160, 0.637);
+  position: relative;
+}
+
+#userImage i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #40189d;
+}
+
+#userName {
+  font-size: 1.5rem;
+  color: rgb(160, 160, 160);
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#addUserButton,
+#logoutButton {
+  outline: none;
+  border: none;
+  width: 150px;
+  padding: 8px 16px;
+  background-color: #40189d;
+  color: white;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  margin: 50px 0;
+}
+
+#userListTable {
+  width: 100%;
+  box-shadow: 0 0 10px 10px #eaeaf0;
+}
+
+#userListTable table {
+  width: 100%;
+  padding: 10px;
+}
+
+#userListTable table th,
+#userListTable table td {
+  padding: 15px 10px;
+  text-align: left;
+}
+
+#userListTable table th {
+  color: #40189d;
+  padding-bottom: 40px;
+}
+
+#userListTable table th i {
+  margin-left: 10px;
+}
+
+.edit,
+.delete {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* END - User list */
