@@ -148,48 +148,13 @@ const userData = [];
 const userID = new Map();
 
 async function getUsers() {
-    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?pageSize=3&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
+    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        console.log(typeof(+data.records[0].fields["#"]));
         userListTable.innerHTML = `<table>
         <tr>
-          <th>#</th>
-          <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-          <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-          <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-          <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-          <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-          <th>Action</th>
-        </tr>
-      </table>`;
-        data.records.forEach((record) => {
-            userData.push(record.fields);
-            userID.set(record.fields.Email, record.id);
-            const row = `
-            <tr>
-                <td>${record.fields["#"]}</td>
-                <td>${record.fields.Name}</td>
-                <td>${record.fields.Email}</td>
-                <td>${record.fields.Phone}</td>
-                <td>${record.fields.Address}</td>
-                <td>${record.fields.Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-            `;
-            userListTable.innerHTML += row;
-        });
-    });
-}
-
-async function getNextUsers() {
-    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?pageSize=3&view=Grid%20view&offset=itrnL2hiY8gvL5utl/recEhWycYQgQe1alD`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        userListTable.innerHTML = `<table>
-        <tr>
-          <th>#</th>
+          <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
           <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
           <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
           <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -296,6 +261,45 @@ function home() {
 // END - Redirect when logout
 
 // Sort filters
+function sortByID() {
+    userData.sort((a, b) => {
+        let x = +a["#"];
+        let y = +b["#"];
+
+        if(x < y) {return -1;}
+        if(x > y) {return 1;}
+        return 0;
+    });
+
+    userListTable.innerHTML = 
+    `<table>
+        <tr>
+            <th>#<i class="fas fa-arrow-up" onclick="removeSortID()"></i></th>
+            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
+            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
+            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
+            <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
+            <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+            <th>Action</th>
+        </tr>
+    </table>`;
+
+  userData.forEach(current => {
+    const row = `
+        <tr>
+            <td>${current["#"]}</td>
+            <td>${current.Name}</td>
+            <td>${current.Email}</td>
+            <td>${current.Phone}</td>
+            <td>${current.Address}</td>
+            <td>${current.Country}</td>
+            <td onclick="editUser(this)" class="edit">Edit</td>
+        </tr>
+        `;
+    userListTable.innerHTML += row;
+  });
+}
+
 function sortByCountry() {
     userData.sort((a, b) => {
         let x = a.Country.toLowerCase();
@@ -309,7 +313,7 @@ function sortByCountry() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#</th>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -348,7 +352,7 @@ function sortByPhone() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#</th>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-up" onclick="removeSortPhone()"></i></th>
@@ -387,7 +391,7 @@ function sortByCity() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#</th>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -426,7 +430,7 @@ function sortByEmail() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#</th>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-up" onclick="removeSortEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -465,12 +469,51 @@ function sortByName() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#</th>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
             <th>Name<i class="fas fa-arrow-up" onclick="removeSortName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="removeSortEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
             <th>City<i class="fas fa-arrow-down" onclick="removeSortCity()"></i></th>
             <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+            <th>Action</th>
+        </tr>
+    </table>`;
+
+  userData.forEach(current => {
+    const row = `
+        <tr>
+            <td>${current["#"]}</td>
+            <td>${current.Name}</td>
+            <td>${current.Email}</td>
+            <td>${current.Phone}</td>
+            <td>${current.Address}</td>
+            <td>${current.Country}</td>
+            <td onclick="editUser(this)" class="edit">Edit</td>
+        </tr>
+        `;
+    userListTable.innerHTML += row;
+  });
+}
+
+function removeSortID() {
+    userData.sort((a, b) => {
+        let x = +a["#"];
+        let y = +b["#"];
+
+        if(x > y) {return -1;}
+        if(x < y) {return 1;}
+        return 0;
+    });
+
+    userListTable.innerHTML = 
+    `<table>
+        <tr>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
+            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
+            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
+            <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
+            <th>Country<i class="fas fa-arrow-up" onclick="removeSortCountry()"></i></th>
             <th>Action</th>
         </tr>
     </table>`;
@@ -502,7 +545,7 @@ function removeSortCountry() {
     });
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#</th>
+      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -539,7 +582,7 @@ function removeSortCity() {
     });
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#</th>
+      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -576,7 +619,7 @@ function removeSortPhone() {
     });
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#</th>
+      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -613,7 +656,7 @@ function removeSortEmail() {
     });
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#</th>
+      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -650,7 +693,7 @@ function removeSortName() {
     });
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#</th>
+      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
