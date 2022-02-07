@@ -1,9 +1,10 @@
 const homeContainer = document.getElementById("home");
 const userList = document.getElementById("userList");
 const userListTable = document.getElementsByTagName("table")[0];
+const message = document.getElementById("message");
+const loginMessage = document.getElementById("loginMessage");
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-    console.info( "This page is reloaded" );
     const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
     if(email === "shaan.mistry@marutitech.com" && status === "true") {
         userList.style.display = "flex";
@@ -103,13 +104,16 @@ loginForm.addEventListener("submit", (e) => {
         document.getElementById("userName").innerText = adminList[0].username;
         getUsers();
     } else {
-        alert("Invalid login credentials. Try again.");
+        loginMessage.style.display = "block";
+        loginMessage.innerText = "Invalid login credentials. Try again";
+        setTimeout(() => loginMessage.style.display = "none", 2000);
     }
 
     loginEmail.value = "";
     loginPassword.value = "";
 });
 // END - Login
+
 const userData = [];
 const userID = new Map();
 
@@ -151,34 +155,41 @@ const addEmail = document.getElementById("addemail");
 const addPhone = document.getElementById("addphone");
 const addAddress = document.getElementById("addaddress");
 const addCountry = document.getElementById("addcountry");
-let counter = 5;
 addUserForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    counter++;
-    fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201`, {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer keyTnehojflD4HoP2",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "fields": {
-                "#": `${counter}`,
-                "Name": `${addName.value}`,
-                "Email": `${addEmail.value}`,
-                "Phone": `${addPhone.value}`,
-                "Address": `${addAddress.value}`,
-                "Country": `${addCountry.value}`
-            }
+    const emailList = userData.map(element => element.Email);
+    if(emailList.includes(addEmail.value)) {
+        message.style.display = "block";
+        message.innerHTML = "User alredy exists";
+        console.log(userData.length);
+        setTimeout(() => message.style.display = "none", 2000);
+    } else {
+        message.style.display = "none";
+        fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201`, {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer keyTnehojflD4HoP2",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "fields": {
+                    "#": `${userData.length + 1}`,
+                    "Name": `${addName.value}`,
+                    "Email": `${addEmail.value}`,
+                    "Phone": `${addPhone.value}`,
+                    "Address": `${addAddress.value}`,
+                    "Country": `${addCountry.value}`
+                }
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        addUserContainer.style.display = "none";
-        location.reload();
-    })
-    .catch(err => console.log(err))
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            addUserContainer.style.display = "none";
+            location.reload();
+        })
+        .catch(err => console.log(err));
+    }
 });
 
 function home() {
@@ -199,6 +210,7 @@ function home() {
   const admin = JSON.parse(localStorage.getItem("admin"))[0];
   admin.status = "false";
   localStorage.setItem("admin", JSON.stringify([admin]));
+  location.reload();
 }
 
 function sortByCountry() {
@@ -324,3 +336,24 @@ updateUserForm.addEventListener("submit", async (e) => {
     })
     .catch(error => console.log(error))
 });
+
+// Search filter for country
+const searchCountryInput = document.getElementById("searchCountry");
+searchCountryInput.addEventListener("input", () => {
+    const rows = document.getElementsByTagName("tr");
+    let i;
+    for(i = 1; i < rows.length; i++) {
+        if(rows[i].children[5].innerText.toString().toLowerCase() === searchCountryInput.value.toString().toLowerCase()) {
+            rows[i].style.display = "";
+        } else {
+           rows[i].style.display = "none";
+        }
+    }
+    if(searchCountryInput.value === "") {
+        for(i = 1; i < rows.length; i++) {
+            rows[i].style.display = "";
+        }
+    }
+});
+
+// END - Search filter for country

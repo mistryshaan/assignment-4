@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  user-select: none;
 }
 
 a {
@@ -58,6 +59,18 @@ input[type="file"] {
 .fa-arrow-up,
 .fa-arrow-down {
   cursor: pointer;
+}
+
+#message,
+#loginMessage {
+  display: none;
+  color: red;
+  text-align: center;
+  transition: 0.5s ease-in-out;
+}
+
+#loginMessage {
+  margin-top: 50px;
 }
 /* END - Utility classes */
 
@@ -242,6 +255,14 @@ input[type="file"] {
   margin: 50px 0;
 }
 
+#searchCountry {
+  margin-bottom: 50px;
+}
+
+#searchCountry::placeholder {
+  color: #40189d;
+}
+
 #userListTable {
   width: 100%;
   box-shadow: 0 0 10px 10px #eaeaf0;
@@ -340,5 +361,41 @@ input[type="file"] {
 
   table tbody:first-child {
     display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  #loginContainer,
+  #signupContainer {
+    width: 80%;
+  }
+
+  table tr {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid black;
+  }
+
+  table tbody:first-child {
+    display: none;
+  }
+
+  #userList > div:first-child {
+    align-self: center;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  #addUserButton,
+  #logoutButton {
+    margin: 0;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  #searchCountry {
+    margin-top: 50px;
   }
 }
