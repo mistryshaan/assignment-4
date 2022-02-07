@@ -102,7 +102,7 @@ input[type="file"] {
   padding: 60px 40px;
   font-size: 1.1rem;
   box-shadow: 0 0 10px 10px #eaeaf0;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -349,7 +349,9 @@ input[type="file"] {
 
 @media (max-width: 799px) {
   #loginContainer,
-  #signupContainer {
+  #signupContainer,
+  #addUserContainer,
+  #updateUserContainer {
     width: 80%;
   }
 
@@ -366,7 +368,9 @@ input[type="file"] {
 
 @media (max-width: 500px) {
   #loginContainer,
-  #signupContainer {
+  #signupContainer,
+  #addUserContainer,
+  #updateUserContainer {
     width: 80%;
   }
 

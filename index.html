@@ -75,7 +75,7 @@
           <input type="tel" required id="phone" class="border-radius" />
         </div>
         <div>
-          <label for="address">Address</label>
+          <label for="address">City</label>
           <input type="text" required id="address" class="border-radius" />
         </div>
         <div>
@@ -117,7 +117,7 @@
           <input type="tel" required id="addphone" class="border-radius" />
         </div>
         <div>
-          <label for="address">Address</label>
+          <label for="address">City</label>
           <input type="text" required id="addaddress" class="border-radius" />
         </div>
         <div>
@@ -178,10 +178,18 @@
         <table>
           <tr>
             <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Address</th>
+            <th>
+              Name<i class="fas fa-arrow-down" onclick="sortByName()"></i>
+            </th>
+            <th>
+              Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i>
+            </th>
+            <th>
+              Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i>
+            </th>
+            <th>
+              City<i class="fas fa-arrow-down" onclick="sortByCity()"></i>
+            </th>
             <th>
               Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i>
             </th>
@@ -209,7 +217,7 @@
           <input type="tel" required id="updatephone" class="border-radius" />
         </div>
         <div>
-          <label for="address">Address</label>
+          <label for="address">City</label>
           <input
             type="text"
             required
