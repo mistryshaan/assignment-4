@@ -279,6 +279,11 @@ input[type="file"] {
   text-align: left;
 }
 
+#userListTable table th:last-child,
+#userListTable table tr td:last-child {
+  text-align: center;
+}
+
 #userListTable table th {
   color: #40189d;
   padding-bottom: 40px;
@@ -288,8 +293,8 @@ input[type="file"] {
   margin-left: 10px;
 }
 
-.edit,
-.delete {
+.edit {
+  margin: auto;
   font-weight: bold;
   cursor: pointer;
 }

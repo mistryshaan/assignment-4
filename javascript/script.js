@@ -4,6 +4,7 @@ const userListTable = document.getElementsByTagName("table")[0];
 const message = document.getElementById("message");
 const loginMessage = document.getElementById("loginMessage");
 
+// Check for page refresh for session management
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
     if(JSON.parse(localStorage.getItem("admin")) !== null) {
         const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
@@ -18,17 +19,9 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
         }
     }
 }
+// END - Check for page refresh for session management
 
-const loginContainer = document.getElementById("loginContainer");
-function openLogin() {
-    loginContainer.style.display = "block";
-    homeContainer.style.display = "none";
-}
-function closeLogin() {
-    loginContainer.style.display = "none";
-    homeContainer.style.display = "flex";
-}
-
+// Sign Up
 const signupContainer = document.getElementById("signupContainer");
 function openSignup() {
     signupContainer.style.display = "block";
@@ -39,7 +32,6 @@ function closeSignup() {
     homeContainer.style.display = "flex";
 }
 
-// Sign Up
 const signupForm = document.getElementById("signup");
 const username = document.getElementById("name");
 const email = document.getElementById("email");
@@ -91,6 +83,16 @@ signupForm.addEventListener("submit", (e) => {
 // END - Sign Up
 
 // Login
+const loginContainer = document.getElementById("loginContainer");
+function openLogin() {
+    loginContainer.style.display = "block";
+    homeContainer.style.display = "none";
+}
+function closeLogin() {
+    loginContainer.style.display = "none";
+    homeContainer.style.display = "flex";
+}
+
 const loginForm = document.getElementById("login");
 const loginEmail = document.getElementById("loginEmail");
 const loginPassword = document.getElementById("loginPassword");
@@ -126,6 +128,7 @@ loginForm.addEventListener("submit", (e) => {
 });
 // END - Login
 
+// Fetch users from Airtable API
 const userData = [];
 const userID = new Map();
 
@@ -151,7 +154,9 @@ async function getUsers() {
         });
     });
 }
+// END - Fetch users from Airtable API
 
+// Add user
 function openaddUser() {
     addUserContainer.style.display = "block";
 }
@@ -203,7 +208,9 @@ addUserForm.addEventListener("submit", (e) => {
         .catch(err => console.log(err));
     }
 });
+// END - Add user
 
+// Redirect when logout
 function home() {
     userListTable.innerHTML = `<table>
     <tr>
@@ -224,7 +231,9 @@ function home() {
   localStorage.setItem("admin", JSON.stringify([admin]));
   location.reload();
 }
+// END - Redirect when logout
 
+// Sort filters
 function sortByCountry() {
     userData.sort((a, b) => {
         let x = a.Country.toLowerCase();
@@ -604,7 +613,9 @@ function removeSortName() {
     userListTable.innerHTML += row;
   });
 }
+// END - Sort filters
 
+// Update user
 const updateUserContainer = document.getElementById("updateUserContainer");
 const updateUserForm = document.getElementById("updateUser");
 const updateName = document.getElementById("updatename");
@@ -652,6 +663,7 @@ updateUserForm.addEventListener("submit", async (e) => {
     })
     .catch(error => console.log(error))
 });
+// END - Update user
 
 // Search filter for country
 const searchCountryInput = document.getElementById("searchCountry");
@@ -671,5 +683,4 @@ searchCountryInput.addEventListener("input", () => {
         }
     }
 });
-
 // END - Search filter for country
