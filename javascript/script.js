@@ -19,6 +19,21 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
         }
     }
 }
+
+window.addEventListener("load", () => {
+    if(JSON.parse(localStorage.getItem("admin")) !== null) {
+        const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
+        if(status === "true") {
+            userList.style.display = "flex";
+            homeContainer.style.display = "none";
+            document.getElementById("userName").innerText = username;
+            getUsers();
+        } else {
+            userList.style.display = "none";
+            homeContainer.style.display = "flex";
+        }
+    }
+})
 // END - Check for page refresh for session management
 
 // Sign Up
@@ -133,9 +148,56 @@ const userData = [];
 const userID = new Map();
 
 async function getUsers() {
-    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?maxRecords=10&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
+    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?pageSize=3&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
     .then(response => response.json())
     .then(data => {
+        console.log(data);
+        userListTable.innerHTML = `<table>
+        <tr>
+          <th>#</th>
+          <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
+          <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
+          <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
+          <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
+          <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+          <th>Action</th>
+        </tr>
+      </table>`;
+        data.records.forEach((record) => {
+            userData.push(record.fields);
+            userID.set(record.fields.Email, record.id);
+            const row = `
+            <tr>
+                <td>${record.fields["#"]}</td>
+                <td>${record.fields.Name}</td>
+                <td>${record.fields.Email}</td>
+                <td>${record.fields.Phone}</td>
+                <td>${record.fields.Address}</td>
+                <td>${record.fields.Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
+            `;
+            userListTable.innerHTML += row;
+        });
+    });
+}
+
+async function getNextUsers() {
+    await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?pageSize=3&view=Grid%20view&offset=itrnL2hiY8gvL5utl/recEhWycYQgQe1alD`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        userListTable.innerHTML = `<table>
+        <tr>
+          <th>#</th>
+          <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
+          <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
+          <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
+          <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
+          <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+          <th>Action</th>
+        </tr>
+      </table>`;
         data.records.forEach((record) => {
             userData.push(record.fields);
             userID.set(record.fields.Email, record.id);
@@ -684,3 +746,4 @@ searchCountryInput.addEventListener("input", () => {
     }
 });
 // END - Search filter for country
+

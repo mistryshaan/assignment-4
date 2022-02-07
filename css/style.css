@@ -178,7 +178,9 @@ input[type="file"] {
 #signupButton,
 #addUserSubmitButton,
 #updateUserSubmitButton,
-#home button {
+#home button,
+#previousButton,
+#nextButton {
   width: auto;
   padding: 8px 16px;
   background-color: #40189d;
@@ -297,6 +299,18 @@ input[type="file"] {
   margin: auto;
   font-weight: bold;
   cursor: pointer;
+}
+
+#pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+#pagination button {
+  width: auto;
+  margin: 0 10px;
 }
 
 /* END - User list */
