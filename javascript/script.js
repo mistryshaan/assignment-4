@@ -5,15 +5,17 @@ const message = document.getElementById("message");
 const loginMessage = document.getElementById("loginMessage");
 
 if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
-    const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
-    if(status === "true") {
-        userList.style.display = "flex";
-        homeContainer.style.display = "none";
-        document.getElementById("userName").innerText = username;
-        getUsers();
-    } else {
-        userList.style.display = "none";
-        homeContainer.style.display = "flex";
+    if(JSON.parse(localStorage.getItem("admin")) !== null) {
+        const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
+        if(status === "true") {
+            userList.style.display = "flex";
+            homeContainer.style.display = "none";
+            document.getElementById("userName").innerText = username;
+            getUsers();
+        } else {
+            userList.style.display = "none";
+            homeContainer.style.display = "flex";
+        }
     }
 }
 
@@ -72,6 +74,9 @@ signupForm.addEventListener("submit", (e) => {
         });
         localStorage.setItem("admin", JSON.stringify(admin));
     }
+
+    getUsers();
+
     username.value = "";
     email.value = "";
     password.value = "";
@@ -95,20 +100,25 @@ loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const adminList = JSON.parse(localStorage.getItem("admin"));
-    const adminEmail = adminList.map(current => current["email"]);
-    const adminPassword = adminList.map(current => current["password"]);
-    
-    if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
-        loginContainer.style.display = "none";
-        userList.style.display = "flex";
-        adminList[0].status = "true";
-        localStorage.setItem("admin", JSON.stringify([adminList[0]]));
-        document.getElementById("userName").innerText = adminList[0].username;
-        getUsers();
-    } else {
+    if(adminList === null) {
         loginMessage.style.display = "block";
-        loginMessage.innerText = "Invalid login credentials. Try again";
+        loginMessage.innerText = "Please signup first.";
         setTimeout(() => loginMessage.style.display = "none", 2000);
+    } else {
+        const adminEmail = adminList.map(current => current["email"]);
+        const adminPassword = adminList.map(current => current["password"]);
+        if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
+            loginContainer.style.display = "none";
+            userList.style.display = "flex";
+            adminList[0].status = "true";
+            localStorage.setItem("admin", JSON.stringify([adminList[0]]));
+            document.getElementById("userName").innerText = adminList[0].username;
+            getUsers();
+        } else {
+            loginMessage.style.display = "block";
+            loginMessage.innerText = "Invalid login credentials. Try again";
+            setTimeout(() => loginMessage.style.display = "none", 2000);
+        }
     }
 
     loginEmail.value = "";
