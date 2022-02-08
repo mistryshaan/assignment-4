@@ -90,6 +90,7 @@ signupForm.addEventListener("submit", (e) => {
     country.value = "";
 
     userList.style.display = "flex";
+    document.getElementById("userName").innerText = username.value;
     signupContainer.style.display = "none"
 
 });
