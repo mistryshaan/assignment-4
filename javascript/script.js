@@ -150,6 +150,7 @@ let recordPerPage = 3;
 let currentPage = 1;
 
 async function getUsers() {
+    document.getElementById("loader").style.display = "block"
     await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
     .then(response => response.json())
     .then(data => {
@@ -159,6 +160,13 @@ async function getUsers() {
         });
         numberOfPage = Math.ceil(userData.length / 3);
     });
+
+    if(userData !== null) {
+        document.getElementById("loader").style.display = "none";
+        userListTable.style.display = "";
+        document.getElementById("pagination").style.display = "flex";
+    }
+
     for(let i = 0; i < 3; i++) {
     const row = `
         <tr>
@@ -566,7 +574,7 @@ function sortByEmail() {
     document.getElementById("previousPageButton").style.opacity = "0.7";
     document.getElementById("previousPageButton").disabled = true;
     document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
+    document.getElementById("nextPageButton").disabled = false;
 }
 
 function sortByName() {
@@ -828,7 +836,7 @@ function removeSortEmail() {
     document.getElementById("previousPageButton").style.opacity = "0.7";
     document.getElementById("previousPageButton").disabled = true;
     document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
+    document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortName() {

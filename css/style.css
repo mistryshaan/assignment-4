@@ -296,6 +296,24 @@ input[type="file"] {
   margin-left: 10px;
 }
 
+#loader {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border-top: 5px solid #40189d;
+  animation: rotation 1s linear infinite;
+  margin: 30px auto;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .edit {
   margin: auto;
   font-weight: bold;
@@ -303,7 +321,7 @@ input[type="file"] {
 }
 
 #pagination {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   margin-top: 30px;
