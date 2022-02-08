@@ -178,7 +178,6 @@ async function getUsers() {
 }
 // END - Fetch users from Airtable API
 function nextPage() {
-    console.log();
     if(currentPage < numberOfPage) {
         document.getElementById("nextPageButton").style.opacity = "1";
         document.getElementById("nextPageButton").disabled = false;
@@ -382,7 +381,12 @@ function sortByID() {
         `;
         userListTable.innerHTML += row;
     }
-    currentPage = 1;
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+    document.getElementById("nextPageButton").disabled = false;
 }
 
 function sortByCountry() {
@@ -422,6 +426,12 @@ function sortByCountry() {
         `;
     userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function sortByPhone() {
@@ -461,6 +471,12 @@ function sortByPhone() {
         `;
         userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function sortByCity() {
@@ -500,6 +516,12 @@ function sortByCity() {
         `;
         userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function sortByEmail() {
@@ -539,6 +561,12 @@ function sortByEmail() {
         `;
         userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function sortByName() {
@@ -578,6 +606,12 @@ function sortByName() {
         `;
         userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortID() {
@@ -617,6 +651,12 @@ function removeSortID() {
         `;
         userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortCountry() {
@@ -654,6 +694,12 @@ function removeSortCountry() {
         `;
         userListTable.innerHTML += row;
     }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortCity() {
@@ -677,20 +723,26 @@ function removeSortCity() {
     </tr>
   </table>`;
 
-  for(let i = 0; i < 3; i++) {
-    const row = `
-        <tr>
-            <td>${userData[i]["#"]}</td>
-            <td>${userData[i].Name}</td>
-            <td>${userData[i].Email}</td>
-            <td>${userData[i].Phone}</td>
-            <td>${userData[i].Address}</td>
-            <td>${userData[i].Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
-    `;
-    userListTable.innerHTML += row;
-}
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
+        `;
+        userListTable.innerHTML += row;
+    }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortPhone() {
@@ -714,20 +766,26 @@ function removeSortPhone() {
     </tr>
   </table>`;
 
-  for(let i = 0; i < 3; i++) {
-    const row = `
-        <tr>
-            <td>${userData[i]["#"]}</td>
-            <td>${userData[i].Name}</td>
-            <td>${userData[i].Email}</td>
-            <td>${userData[i].Phone}</td>
-            <td>${userData[i].Address}</td>
-            <td>${userData[i].Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
-    `;
-    userListTable.innerHTML += row;
-}
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
+        `;
+        userListTable.innerHTML += row;
+    }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortEmail() {
@@ -751,20 +809,26 @@ function removeSortEmail() {
     </tr>
   </table>`;
 
-  for(let i = 0; i < 3; i++) {
-    const row = `
-        <tr>
-            <td>${userData[i]["#"]}</td>
-            <td>${userData[i].Name}</td>
-            <td>${userData[i].Email}</td>
-            <td>${userData[i].Phone}</td>
-            <td>${userData[i].Address}</td>
-            <td>${userData[i].Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
-    `;
-    userListTable.innerHTML += row;
-}
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
+        `;
+        userListTable.innerHTML += row;
+    }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortName() {
@@ -788,20 +852,26 @@ function removeSortName() {
     </tr>
   </table>`;
 
-  for(let i = 0; i < 3; i++) {
-    const row = `
-        <tr>
-            <td>${userData[i]["#"]}</td>
-            <td>${userData[i].Name}</td>
-            <td>${userData[i].Email}</td>
-            <td>${userData[i].Phone}</td>
-            <td>${userData[i].Address}</td>
-            <td>${userData[i].Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
-    `;
-    userListTable.innerHTML += row;
-}
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
+        `;
+        userListTable.innerHTML += row;
+    }
+
+    currentPage = 0;
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+    document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
 }
 // END - Sort filters
 
