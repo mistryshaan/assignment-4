@@ -368,20 +368,20 @@ function sortByID() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function sortByCountry() {
@@ -407,20 +407,20 @@ function sortByCountry() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
+    for(let i = 0; i < 3; i++) {
+        const row = `
         <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
+            <td>${userData[i]["#"]}</td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
             <td onclick="editUser(this)" class="edit">Edit</td>
         </tr>
         `;
     userListTable.innerHTML += row;
-  });
+    }
 }
 
 function sortByPhone() {
@@ -446,20 +446,20 @@ function sortByPhone() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function sortByCity() {
@@ -485,20 +485,20 @@ function sortByCity() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function sortByEmail() {
@@ -524,20 +524,20 @@ function sortByEmail() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function sortByName() {
@@ -563,20 +563,20 @@ function sortByName() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function removeSortID() {
@@ -602,20 +602,20 @@ function removeSortID() {
         </tr>
     </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function removeSortCountry() {
@@ -639,20 +639,20 @@ function removeSortCountry() {
     </tr>
   </table>`;
 
-  userData.forEach(current => {
-    const row = `
-        <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
-            <td onclick="editUser(this)" class="edit">Edit</td>
-        </tr>
+    for(let i = 0; i < 3; i++) {
+        const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
         `;
-    userListTable.innerHTML += row;
-  });
+        userListTable.innerHTML += row;
+    }
 }
 
 function removeSortCity() {
@@ -676,20 +676,20 @@ function removeSortCity() {
     </tr>
   </table>`;
 
-  userData.forEach(current => {
+  for(let i = 0; i < 3; i++) {
     const row = `
         <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
+            <td>${userData[i]["#"]}</td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
             <td onclick="editUser(this)" class="edit">Edit</td>
         </tr>
-        `;
+    `;
     userListTable.innerHTML += row;
-  });
+}
 }
 
 function removeSortPhone() {
@@ -713,20 +713,20 @@ function removeSortPhone() {
     </tr>
   </table>`;
 
-  userData.forEach(current => {
+  for(let i = 0; i < 3; i++) {
     const row = `
         <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
+            <td>${userData[i]["#"]}</td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
             <td onclick="editUser(this)" class="edit">Edit</td>
         </tr>
-        `;
+    `;
     userListTable.innerHTML += row;
-  });
+}
 }
 
 function removeSortEmail() {
@@ -750,20 +750,20 @@ function removeSortEmail() {
     </tr>
   </table>`;
 
-  userData.forEach(current => {
+  for(let i = 0; i < 3; i++) {
     const row = `
         <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
+            <td>${userData[i]["#"]}</td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
             <td onclick="editUser(this)" class="edit">Edit</td>
         </tr>
-        `;
+    `;
     userListTable.innerHTML += row;
-  });
+}
 }
 
 function removeSortName() {
@@ -787,20 +787,20 @@ function removeSortName() {
     </tr>
   </table>`;
 
-  userData.forEach(current => {
+  for(let i = 0; i < 3; i++) {
     const row = `
         <tr>
-            <td>${current["#"]}</td>
-            <td>${current.Name}</td>
-            <td>${current.Email}</td>
-            <td>${current.Phone}</td>
-            <td>${current.Address}</td>
-            <td>${current.Country}</td>
+            <td>${userData[i]["#"]}</td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
             <td onclick="editUser(this)" class="edit">Edit</td>
         </tr>
-        `;
+    `;
     userListTable.innerHTML += row;
-  });
+}
 }
 // END - Sort filters
 
