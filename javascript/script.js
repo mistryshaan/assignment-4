@@ -9,10 +9,8 @@ if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
     if(JSON.parse(localStorage.getItem("admin")) !== null) {
         const {username, email, status} = JSON.parse(localStorage.getItem("admin"))[0];
         if(status === "true") {
-            userList.style.display = "flex";
             homeContainer.style.display = "none";
             document.getElementById("userName").innerText = username;
-            getUsers();
         } else {
             userList.style.display = "none";
             homeContainer.style.display = "flex";
@@ -146,42 +144,122 @@ loginForm.addEventListener("submit", (e) => {
 // Fetch users from Airtable API
 const userData = [];
 const userID = new Map();
+let numberOfPage;
+let recordPerPage = 3;
+let currentPage = 1;
 
 async function getUsers() {
     await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201?&view=Grid%20view`, {headers: {"Authorization": "Bearer keyTnehojflD4HoP2"}})
     .then(response => response.json())
     .then(data => {
-        console.log(typeof(+data.records[0].fields["#"]));
-        userListTable.innerHTML = `<table>
-        <tr>
-          <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-          <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-          <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-          <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-          <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-          <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-          <th>Action</th>
-        </tr>
-      </table>`;
         data.records.forEach((record) => {
             userData.push(record.fields);
             userID.set(record.fields.Email, record.id);
+            numberOfPage = Math.ceil(userData.length / 3);
+        });
+    });
+    for(let i = 0; i < 3; i++) {
+    const row = `
+        <tr>
+            <td>${userData[i]["#"]}</td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
+            <td onclick="editUser(this)" class="edit">Edit</td>
+        </tr>
+        `;
+        userListTable.innerHTML += row;
+    }
+    document.getElementById("previousPageButton").style.opacity = "0.7";
+    document.getElementById("previousPageButton").disabled = true;
+}
+// END - Fetch users from Airtable API
+function nextPage() {
+    if(currentPage < numberOfPage) {
+        document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
+        document.getElementById("previousPageButton").style.opacity = "1";
+        document.getElementById("previousPageButton").disabled = false;
+        currentPage++;
+        userListTable.innerHTML = 
+            `<table>
+                <tr>
+                    <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+                    <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
+                    <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
+                    <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
+                    <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
+                    <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+                    <th>Action</th>
+                </tr>
+            </table>`;
+
+        for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
             const row = `
             <tr>
-                <td>${record.fields["#"]}</td>
-                <td>${record.fields.Name}</td>
-                <td>${record.fields.Email}</td>
-                <td>${record.fields.Phone}</td>
-                <td>${record.fields.Address}</td>
-                <td>${record.fields.Country}</td>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
                 <td onclick="editUser(this)" class="edit">Edit</td>
             </tr>
             `;
             userListTable.innerHTML += row;
-        });
-    });
+        }
+
+        
+        if(currentPage == numberOfPage) {
+            document.getElementById("nextPageButton").style.opacity = "0.7";
+            document.getElementById("nextPageButton").disabled = true;
+        }
+    }
 }
-// END - Fetch users from Airtable API
+
+function previousPage() {
+    if(currentPage > 1) {
+        document.getElementById("previousPageButton").style.opacity = "1";
+        document.getElementById("previousPageButton").disabled = false;
+        document.getElementById("nextPageButton").style.opacity = "1";
+        document.getElementById("nextPageButton").disabled = false;
+        currentPage--;
+        userListTable.innerHTML = 
+            `<table>
+                <tr>
+                    <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+                    <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
+                    <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
+                    <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
+                    <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
+                    <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+                    <th>Action</th>
+                </tr>
+            </table>`;
+
+        for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
+            const row = `
+            <tr>
+                <td>${userData[i]["#"]}</td>
+                <td>${userData[i].Name}</td>
+                <td>${userData[i].Email}</td>
+                <td>${userData[i].Phone}</td>
+                <td>${userData[i].Address}</td>
+                <td>${userData[i].Country}</td>
+                <td onclick="editUser(this)" class="edit">Edit</td>
+            </tr>
+            `;
+            userListTable.innerHTML += row;
+        }
+
+        if(currentPage === 1) {
+            document.getElementById("previousPageButton").style.opacity = "0.7";
+            document.getElementById("previousPageButton").disabled = true;
+        }
+    }
+}
 
 // Add user
 function openaddUser() {
@@ -513,7 +591,7 @@ function removeSortID() {
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
             <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-up" onclick="removeSortCountry()"></i></th>
+            <th>Country<i class="fas fa-arrow-down" onclick="removeSortCountry()"></i></th>
             <th>Action</th>
         </tr>
     </table>`;
@@ -789,4 +867,3 @@ searchCountryInput.addEventListener("input", () => {
     }
 });
 // END - Search filter for country
-

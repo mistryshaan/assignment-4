@@ -179,8 +179,8 @@ input[type="file"] {
 #addUserSubmitButton,
 #updateUserSubmitButton,
 #home button,
-#previousButton,
-#nextButton {
+#previousPageButton,
+#nextPageButton {
   width: auto;
   padding: 8px 16px;
   background-color: #40189d;

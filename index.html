@@ -82,12 +82,6 @@
           <label for="country">Country</label>
           <input type="text" required id="country" class="border-radius" />
         </div>
-        <!-- <div>
-          <label for="image" class="imageUpload border-radius"
-            ><i class="fas fa-cloud-upload-alt"></i>Profile image</label
-          >
-          <input type="file" required id="image" accept="images/*" />
-        </div> -->
         <div>
           <input
             type="submit"
@@ -124,12 +118,6 @@
           <label for="country">Country</label>
           <input type="text" required id="addcountry" class="border-radius" />
         </div>
-        <!-- <div>
-          <label for="image" class="imageUpload border-radius"
-            ><i class="fas fa-cloud-upload-alt"></i>Profile image</label
-          >
-          <input type="file" required id="addimage" accept="images/*" />
-        </div> -->
         <div>
           <input
             type="submit"
@@ -199,14 +187,14 @@
       </div>
 
       <div id="pagination">
-        <button onclick="getUsers()" id="previousButton" class="border-radius">
-          Previous
-        </button>
         <button
-          onclick="getNextUsers()"
-          id="previousButton"
+          onclick="previousPage()"
+          id="previousPageButton"
           class="border-radius"
         >
+          Previous
+        </button>
+        <button onclick="nextPage()" id="nextPageButton" class="border-radius">
           Next
         </button>
       </div>
@@ -247,12 +235,6 @@
             class="border-radius"
           />
         </div>
-        <!-- <div>
-          <label for="image" class="imageUpload border-radius"
-            ><i class="fas fa-cloud-upload-alt"></i>Profile image</label
-          >
-          <input type="file" required id="addimage" accept="images/*" />
-        </div> -->
         <div>
           <input
             type="submit"
