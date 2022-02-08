@@ -382,6 +382,7 @@ function sortByID() {
         `;
         userListTable.innerHTML += row;
     }
+    currentPage = 1;
 }
 
 function sortByCountry() {
@@ -860,7 +861,7 @@ searchCountryInput.addEventListener("input", () => {
     const rows = document.getElementsByTagName("tr");
     let i;
     for(i = 1; i < rows.length; i++) {
-        if(rows[i].children[5].innerText.toString().toLowerCase() === searchCountryInput.value.toString().toLowerCase()) {
+        if(rows[i].children[5].innerText.toString().toLowerCase().startsWith(searchCountryInput.value.toString().toLowerCase())) {
             rows[i].style.display = "";
         } else {
            rows[i].style.display = "none";

@@ -112,6 +112,7 @@ input[type="file"] {
 #addUserContainer,
 #updateUserContainer {
   background-color: white;
+  z-index: 100;
 }
 
 #login > div,
