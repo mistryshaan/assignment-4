@@ -156,8 +156,8 @@ async function getUsers() {
         data.records.forEach((record) => {
             userData.push(record.fields);
             userID.set(record.fields.Email, record.id);
-            numberOfPage = Math.ceil(userData.length / 3);
         });
+        numberOfPage = Math.ceil(userData.length / 3);
     });
     for(let i = 0; i < 3; i++) {
     const row = `
@@ -178,6 +178,7 @@ async function getUsers() {
 }
 // END - Fetch users from Airtable API
 function nextPage() {
+    console.log();
     if(currentPage < numberOfPage) {
         document.getElementById("nextPageButton").style.opacity = "1";
         document.getElementById("nextPageButton").disabled = false;
@@ -198,18 +199,22 @@ function nextPage() {
             </table>`;
 
         for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
-            const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-            `;
-            userListTable.innerHTML += row;
+            if(i === userData.length) {
+                break;
+            } else {
+                const row = `
+                    <tr>
+                        <td>${userData[i]["#"]}</td>
+                        <td>${userData[i].Name}</td>
+                        <td>${userData[i].Email}</td>
+                        <td>${userData[i].Phone}</td>
+                        <td>${userData[i].Address}</td>
+                        <td>${userData[i].Country}</td>
+                        <td onclick="editUser(this)" class="edit">Edit</td>
+                    </tr>
+                `;
+                userListTable.innerHTML += row;
+            }
         }
 
         
