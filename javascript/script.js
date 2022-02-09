@@ -229,6 +229,9 @@ function nextPage() {
             document.getElementById("nextPageButton").style.opacity = "0.7";
             document.getElementById("nextPageButton").disabled = true;
         }
+
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
     }
 }
 
@@ -271,6 +274,9 @@ function previousPage() {
             document.getElementById("previousPageButton").style.opacity = "0.7";
             document.getElementById("previousPageButton").disabled = true;
         }
+
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
     }
 }
 
