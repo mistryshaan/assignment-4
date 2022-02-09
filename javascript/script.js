@@ -160,6 +160,7 @@ async function getUsers() {
             userID.set(record.fields.Email, record.id);
         });
         numberOfPage = Math.ceil(userData.length / 3);
+        console.log(userData);
     });
 
     if(userData !== null) {
@@ -167,6 +168,18 @@ async function getUsers() {
         userListTable.style.display = "";
         document.getElementById("pagination").style.display = "flex";
     }
+
+    userListTable.innerHTML = 
+    `<tr>
+        <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+        <th>Profile Image</th>
+        <th>Name<i class="fas fa-arrow-down" onclick="sortUp('Name')"></i></th>
+        <th>Email<i class="fas fa-arrow-down" onclick="sortUp('Email')"></i></th>
+        <th>Phone<i class="fas fa-arrow-down" onclick="sortUp('Phone')"></i></th>
+        <th>City<i class="fas fa-arrow-down" onclick="sortUp('Address')"></i></th>
+        <th>Country<i class="fas fa-arrow-down" onclick="sortUp('Country')"></i></th>
+        <th>Action</th>
+    </tr>`;
 
     for(let i = 0; i < 3; i++) {
     const row = `
@@ -199,14 +212,15 @@ function nextPage() {
                 <tr>
                     <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
                     <th>Profile Image</th>
-                    <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-                    <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-                    <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-                    <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-                    <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+                    <th>Name<i class="fas fa-arrow-down" onclick="sortUp('Name')"></i></th>
+                    <th>Email<i class="fas fa-arrow-down" onclick="sortUp('Email')"></i></th>
+                    <th>Phone<i class="fas fa-arrow-down" onclick="sortUp('Phone')"></i></th>
+                    <th>City<i class="fas fa-arrow-down" onclick="sortUp('Address')"></i></th>
+                    <th>Country<i class="fas fa-arrow-down" onclick="sortUp('Country')"></i></th>
                     <th>Action</th>
                 </tr>
-            </table>`;
+            </table>`
+        ;
 
         for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
             if(i === userData.length) {
@@ -251,11 +265,11 @@ function previousPage() {
                 <tr>
                     <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
                     <th>Profile Image</th>
-                    <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-                    <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-                    <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-                    <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-                    <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+                    <th>Name<i class="fas fa-arrow-down" onclick="sortUp('Name')"></i></th>
+                    <th>Email<i class="fas fa-arrow-down" onclick="sortUp('Email')"></i></th>
+                    <th>Phone<i class="fas fa-arrow-down" onclick="sortUp('Phone')"></i></th>
+                    <th>City<i class="fas fa-arrow-down" onclick="sortUp('Address')"></i></th>
+                    <th>Country<i class="fas fa-arrow-down" onclick="sortUp('Country')"></i></th>
                     <th>Action</th>
                 </tr>
             </table>`;
@@ -390,65 +404,18 @@ function sortByID() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#<i class="fas fa-arrow-up" onclick="removeSortID()"></i></th>
+            <th>#<i class="fas fa-arrow-down" onclick="removeSortID()"></i></th>
             <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+            <th>Name<i class="fas fa-arrow-down" onclick="sortDown('Name')"></i></th>
+            <th>Email<i class="fas fa-arrow-down" onclick="sortDown('Email')"></i></th>
+            <th>Phone<i class="fas fa-arrow-down" onclick="sortDown('Phone')"></i></th>
+            <th>City<i class="fas fa-arrow-down" onclick="sortDown('Address')"></i></th>
+            <th>Country<i class="fas fa-arrow-down" onclick="sortDown('Country')"></i></th>
             <th>Action</th>
         </tr>
     </table>`;
 
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-    document.getElementById("nextPageButton").disabled = false;
-}
-
-function sortByCountry() {
-    userData.sort((a, b) => {
-        let x = a.Country.toLowerCase();
-        let y = b.Country.toLowerCase();
-
-        if(x < y) {return -1;}
-        if(x > y) {return 1;}
-        return 0;
-    });
-
-    userListTable.innerHTML = 
-    `<table>
-        <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-            <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-up" onclick="removeSortCountry()"></i></th>
-            <th>Action</th>
-        </tr>
-    </table>`;
-
-    for(let i = 0; i < 3; i++) {
+    for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
         const row = `
         <tr>
             <td>${userData[i]["#"]}</td>
@@ -461,202 +428,8 @@ function sortByCountry() {
             <td onclick="editUser(this)" class="edit">Edit</td>
         </tr>
         `;
-    userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
-}
-
-function sortByPhone() {
-    userData.sort((a, b) => {
-        let x = a.Phone.toLowerCase();
-        let y = b.Phone.toLowerCase();
-
-        if(x < y) {return -1;}
-        if(x > y) {return 1;}
-        return 0;
-    });
-
-    userListTable.innerHTML = 
-    `<table>
-        <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-            <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-up" onclick="removeSortPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="removeSortCountry()"></i></th>
-            <th>Action</th>
-        </tr>
-    </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
         userListTable.innerHTML += row;
     }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
-}
-
-function sortByCity() {
-    userData.sort((a, b) => {
-        let x = a.Address.toLowerCase();
-        let y = b.Address.toLowerCase();
-
-        if(x < y) {return -1;}
-        if(x > y) {return 1;}
-        return 0;
-    });
-
-    userListTable.innerHTML = 
-    `<table>
-        <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-            <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-up" onclick="removeSortCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-            <th>Action</th>
-        </tr>
-    </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
-}
-
-function sortByEmail() {
-    userData.sort((a, b) => {
-        let x = a.Email.toLowerCase();
-        let y = b.Email.toLowerCase();
-
-        if(x < y) {return -1;}
-        if(x > y) {return 1;}
-        return 0;
-    });
-
-    userListTable.innerHTML = 
-    `<table>
-        <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-            <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-            <th>Email<i class="fas fa-arrow-up" onclick="removeSortEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="removeSortCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-            <th>Action</th>
-        </tr>
-    </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-    document.getElementById("nextPageButton").disabled = false;
-}
-
-function sortByName() {
-    userData.sort((a, b) => {
-        let x = a.Name.toLowerCase();
-        let y = b.Name.toLowerCase();
-
-        if(x < y) {return -1;}
-        if(x > y) {return 1;}
-        return 0;
-    });
-
-    userListTable.innerHTML = 
-    `<table>
-        <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-            <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-up" onclick="removeSortName()"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="removeSortEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="removeSortCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-            <th>Action</th>
-        </tr>
-    </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
 }
 
 function removeSortID() {
@@ -674,42 +447,81 @@ function removeSortID() {
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
             <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="removeSortCountry()"></i></th>
+            <th>Name<i class="fas fa-arrow-down" onclick="sortDown('Name')"></i></th>
+            <th>Email<i class="fas fa-arrow-down" onclick="sortDown('Email')"></i></th>
+            <th>Phone<i class="fas fa-arrow-down" onclick="sortDown('Phone')"></i></th>
+            <th>City<i class="fas fa-arrow-down" onclick="sortDown('Address')"></i></th>
+            <th>Country<i class="fas fa-arrow-down" onclick="sortDown('Country')"></i></th>
             <th>Action</th>
         </tr>
     </table>`;
 
-    for(let i = 0; i < 3; i++) {
+    for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
         const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
+        <tr>
+            <td>${userData[i]["#"]}</td>
+            <td><img src="${userData[i].Image[0].url}"/></td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
+            <td onclick="editUser(this)" class="edit">Edit</td>
+        </tr>
+        `;
+        userListTable.innerHTML += row;
+    }
+    
+}
+
+function sortUp(field) {
+    console.log(currentPage);
+    userData.sort((a, b) => {
+        let x = a[field].toLowerCase();
+        let y = b[field].toLowerCase();
+
+        if(x < y) {return -1;}
+        if(x > y) {return 1;}
+        return 0;
+    });
+
+    userListTable.innerHTML = 
+    `<table>
+        <tr>
+            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
+            <th>Name<i class="fas fa-arrow-down" onclick=${field == 'Name' ? "sortDown('Name')" : "sortUp('Name')"}></i></th>
+            <th>Email<i class="fas fa-arrow-down" onclick=${field == 'Email' ? "sortDown('Email')" : "sortUp('Email')"}></i></th>
+            <th>Phone<i class="fas fa-arrow-down" onclick=${field == 'Phone' ? "sortDown('Phone')" : "sortUp('Phone')"}></i></th>
+            <th>City<i class="fas fa-arrow-down" onclick=${field == 'Address' ? "sortDown('Address')" : "sortUp('Address')"}></i></th>
+            <th>Country<i class="fas fa-arrow-down" onclick=${field == 'Country' ? "sortDown('Country')" : "sortUp('Country')"}></i></th>
+            <th>Action</th>
+        </tr>
+    </table>`;
+
+    for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
+        const row = `
+        <tr>
+            <td>${userData[i]["#"]}</td>
+            <td><img src="${userData[i].Image[0].url}"/></td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
+            <td onclick="editUser(this)" class="edit">Edit</td>
+        </tr>
         `;
         userListTable.innerHTML += row;
     }
 
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
 }
 
-function removeSortCountry() {
+function sortDown(field) {
+    console.log(currentPage);
     userData.sort((a, b) => {
-        let x = a.Country.toLowerCase();
-        let y = b.Country.toLowerCase();
+        let x = a[field].toLowerCase();
+        let y = b[field].toLowerCase();
 
         if(x > y) {return -1;}
         if(x < y) {return 1;}
@@ -719,216 +531,30 @@ function removeSortCountry() {
     <tr>
       <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
       <th>Profile Image</th>
-      <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
+      <th>Name<i class="fas fa-arrow-down" onclick=${field == 'Name' ? "sortUp('Name')" : "sortDown('Name')"}></i></th>
+      <th>Email<i class="fas fa-arrow-down" onclick=${field == 'Email' ? "sortUp('Email')" : "sortDown('Email')"}></i></th>
+      <th>Phone<i class="fas fa-arrow-down" onclick=${field == 'Phone' ? "sortUp('Phone')" : "sortDown('Phone')"}></i></th>
+      <th>City<i class="fas fa-arrow-down" onclick=${field == 'Address' ? "sortUp('Address')" : "sortDown('Address')"}></i></th>
+      <th>Country<i class="fas fa-arrow-down" onclick=${field == 'Country' ? "sortUp('Country')" : "sortDown('Country')"}></i></th>
       <th>Action</th>
     </tr>
   </table>`;
 
-    for(let i = 0; i < 3; i++) {
+    for(let i = (currentPage - 1) * recordPerPage; i < (currentPage * recordPerPage); i++) {
         const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
+        <tr>
+            <td>${userData[i]["#"]}</td>
+            <td><img src="${userData[i].Image[0].url}"/></td>
+            <td>${userData[i].Name}</td>
+            <td>${userData[i].Email}</td>
+            <td>${userData[i].Phone}</td>
+            <td>${userData[i].Address}</td>
+            <td>${userData[i].Country}</td>
+            <td onclick="editUser(this)" class="edit">Edit</td>
+        </tr>
         `;
         userListTable.innerHTML += row;
     }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
-}
-
-function removeSortCity() {
-    userData.sort((a, b) => {
-        let x = a.Address.toLowerCase();
-        let y = b.Address.toLowerCase();
-
-        if(x > y) {return -1;}
-        if(x < y) {return 1;}
-        return 0;
-    });
-    userListTable.innerHTML = `<table>
-    <tr>
-      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-      <th>Profile Image</th>
-      <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-      <th>Action</th>
-    </tr>
-  </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
-}
-
-function removeSortPhone() {
-    userData.sort((a, b) => {
-        let x = a.Phone.toLowerCase();
-        let y = b.Phone.toLowerCase();
-
-        if(x > y) {return -1;}
-        if(x < y) {return 1;}
-        return 0;
-    });
-    userListTable.innerHTML = `<table>
-    <tr>
-      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-      <th>Profile Image</th>
-      <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-      <th>Action</th>
-    </tr>
-  </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
-}
-
-function removeSortEmail() {
-    userData.sort((a, b) => {
-        let x = a.Email.toLowerCase();
-        let y = b.Email.toLowerCase();
-
-        if(x > y) {return -1;}
-        if(x < y) {return 1;}
-        return 0;
-    });
-    userListTable.innerHTML = `<table>
-    <tr>
-      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-      <th>Profile Image</th>
-      <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-      <th>Action</th>
-    </tr>
-  </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-    document.getElementById("nextPageButton").disabled = false;
-}
-
-function removeSortName() {
-    userData.sort((a, b) => {
-        let x = a.Name.toLowerCase();
-        let y = b.Name.toLowerCase();
-
-        if(x > y) {return -1;}
-        if(x < y) {return 1;}
-        return 0;
-    });
-    userListTable.innerHTML = `<table>
-    <tr>
-      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-      <th>Profile Image</th>
-      <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-      <th>Action</th>
-    </tr>
-  </table>`;
-
-    for(let i = 0; i < 3; i++) {
-        const row = `
-            <tr>
-                <td>${userData[i]["#"]}</td>
-                <td><img src="${userData[i].Image[0].url}"/></td>
-                <td>${userData[i].Name}</td>
-                <td>${userData[i].Email}</td>
-                <td>${userData[i].Phone}</td>
-                <td>${userData[i].Address}</td>
-                <td>${userData[i].Country}</td>
-                <td onclick="editUser(this)" class="edit">Edit</td>
-            </tr>
-        `;
-        userListTable.innerHTML += row;
-    }
-
-    currentPage = 0;
-    document.getElementById("previousPageButton").style.opacity = "0.7";
-    document.getElementById("previousPageButton").disabled = true;
-    document.getElementById("nextPageButton").style.opacity = "1";
-        document.getElementById("nextPageButton").disabled = false;
 }
 // END - Sort filters
 
