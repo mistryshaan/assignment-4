@@ -353,6 +353,10 @@ img {
   table tbody:first-child {
     display: none;
   }
+
+  #userListTable table tr td:nth-child(2) {
+    text-align: left;
+  }
 }
 
 @media (min-width: 971px) and (max-width: 1129px) {
@@ -369,6 +373,10 @@ img {
 
   table tbody:first-child {
     display: none;
+  }
+
+  #userListTable table tr td:nth-child(2) {
+    text-align: left;
   }
 }
 
@@ -387,6 +395,10 @@ img {
   table tbody:first-child {
     display: none;
   }
+
+  #userListTable table tr td:nth-child(2) {
+    text-align: left;
+  }
 }
 
 @media (max-width: 799px) {
@@ -401,6 +413,10 @@ img {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid black;
+  }
+
+  #userListTable table tr td:nth-child(2) {
+    text-align: left;
   }
 
   table tbody:first-child {
@@ -420,6 +436,10 @@ img {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid black;
+  }
+
+  #userListTable table tr td:nth-child(2) {
+    text-align: left;
   }
 
   table tbody:first-child {
