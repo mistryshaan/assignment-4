@@ -160,7 +160,6 @@ async function getUsers() {
             userID.set(record.fields.Email, record.id);
         });
         numberOfPage = Math.ceil(userData.length / 3);
-        console.log(userData);
     });
 
     if(userData !== null) {
@@ -171,7 +170,7 @@ async function getUsers() {
 
     userListTable.innerHTML = 
     `<tr>
-        <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+        <th>#<i class="fas fa-arrow-down" onclick="removeSortID()"></i></th>
         <th>Profile Image</th>
         <th>Name<i class="fas fa-arrow-down" onclick="sortUp('Name')"></i></th>
         <th>Email<i class="fas fa-arrow-down" onclick="sortUp('Email')"></i></th>
@@ -475,7 +474,6 @@ function removeSortID() {
 }
 
 function sortUp(field) {
-    console.log(currentPage);
     userData.sort((a, b) => {
         let x = a[field].toLowerCase();
         let y = b[field].toLowerCase();
@@ -518,7 +516,6 @@ function sortUp(field) {
 }
 
 function sortDown(field) {
-    console.log(currentPage);
     userData.sort((a, b) => {
         let x = a[field].toLowerCase();
         let y = b[field].toLowerCase();
