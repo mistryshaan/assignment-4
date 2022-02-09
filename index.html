@@ -72,13 +72,7 @@
         </div>
         <div>
           <label for="phone">Phone</label>
-          <input
-            type="tel"
-            required
-            id="phone"
-            class="border-radius"
-            pattern="[1-9]{1}[0-9]{9}"
-          />
+          <input type="tel" required id="phone" class="border-radius" />
         </div>
         <div>
           <label for="address">City</label>
@@ -106,29 +100,26 @@
         <div onclick="closeAddUser()"><i class="fas fa-times"></i></div>
         <div>
           <label for="name">Name</label>
-          <input type="text" required id="addname" class="border-radius" />
+          <input type="text" id="addname" class="border-radius" />
         </div>
         <div>
           <label for="password">Email</label>
-          <input type="email" required id="addemail" class="border-radius" />
+          <input type="email" id="addemail" class="border-radius" />
         </div>
         <div>
           <label for="phone">Phone</label>
-          <input
-            type="tel"
-            required
-            id="addphone"
-            class="border-radius"
-            pattern="[1-9]{1}[0-9]{9}"
-          />
+          <input type="tel" id="addphone" class="border-radius" />
         </div>
         <div>
           <label for="address">City</label>
-          <input type="text" required id="addaddress" class="border-radius" />
+          <input type="text" id="addaddress" class="border-radius" />
         </div>
         <div>
           <label for="country">Country</label>
-          <input type="text" required id="addcountry" class="border-radius" />
+          <input type="text" id="addcountry" class="border-radius" />
+        </div>
+        <div>
+          <input type="file" id="addimage" class="borde-radius" />
         </div>
         <div>
           <input
@@ -178,6 +169,7 @@
         <table>
           <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>
               Name<i class="fas fa-arrow-down" onclick="sortByName()"></i>
             </th>

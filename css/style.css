@@ -28,8 +28,10 @@ button {
   font-size: 1.1rem;
 }
 
-input[type="file"] {
-  display: none;
+img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
 }
 
 /* Animations */
@@ -98,7 +100,7 @@ input[type="file"] {
 #addUserContainer,
 #updateUserContainer {
   display: none;
-  width: 25%;
+  width: 30%;
   padding: 60px 40px;
   font-size: 1.1rem;
   box-shadow: 0 0 10px 10px #eaeaf0;
@@ -283,7 +285,9 @@ input[type="file"] {
 }
 
 #userListTable table th:last-child,
-#userListTable table tr td:last-child {
+#userListTable table tr td:last-child,
+#userListTable table th:nth-child(2),
+#userListTable table tr td:nth-child(2) {
   text-align: center;
 }
 

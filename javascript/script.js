@@ -170,7 +170,8 @@ async function getUsers() {
     for(let i = 0; i < 3; i++) {
     const row = `
         <tr>
-            <td>${userData[i]["#"]}</td>
+            <td>${userData[i]["#"]}</td>   
+            <td><img src="${userData[i].Image[0].url}"/></td>   
             <td>${userData[i].Name}</td>
             <td>${userData[i].Email}</td>
             <td>${userData[i].Phone}</td>
@@ -196,6 +197,7 @@ function nextPage() {
             `<table>
                 <tr>
                     <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+                    <th>Profile Image</th>
                     <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
                     <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
                     <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -212,6 +214,7 @@ function nextPage() {
                 const row = `
                     <tr>
                         <td>${userData[i]["#"]}</td>
+                        <td><img src="${userData[i].Image[0].url}"/></td>
                         <td>${userData[i].Name}</td>
                         <td>${userData[i].Email}</td>
                         <td>${userData[i].Phone}</td>
@@ -246,6 +249,7 @@ function previousPage() {
             `<table>
                 <tr>
                     <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+                    <th>Profile Image</th>
                     <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
                     <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
                     <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -259,6 +263,7 @@ function previousPage() {
             const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -296,17 +301,28 @@ const addEmail = document.getElementById("addemail");
 const addPhone = document.getElementById("addphone");
 const addAddress = document.getElementById("addaddress");
 const addCountry = document.getElementById("addcountry");
-addUserForm.addEventListener("submit", (e) => {
+addUserForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const emailList = userData.map(element => element.Email);
     if(emailList.includes(addEmail.value)) {
         message.style.display = "block";
         message.innerHTML = "User alredy exists";
-        console.log(userData.length);
         setTimeout(() => message.style.display = "none", 2000);
     } else {
         message.style.display = "none";
-        fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201`, {
+        console.log(document.getElementById("addimage").files[0]);
+        let storeImage =  await fetch("https://www.filestackapi.com/api/store/S3?key=AEKNiDPBQYe9I6feOVqkAz", {
+            method: "POST",
+            body:  document.getElementById("addimage").files[0],
+            headers: {
+                "Content-Type": "image/png"
+            }
+        })
+        .then(response => response.json())
+        let url = await storeImage.url;
+        console.log(url)
+
+        await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201`, {
             method: "POST",
             headers: {
                 "Authorization": "Bearer keyTnehojflD4HoP2",
@@ -319,7 +335,10 @@ addUserForm.addEventListener("submit", (e) => {
                     "Email": `${addEmail.value}`,
                     "Phone": `${addPhone.value}`,
                     "Address": `${addAddress.value}`,
-                    "Country": `${addCountry.value}`
+                    "Country": `${addCountry.value}`,
+                    "Image": [{
+                        "url": `${url}`
+                    }]
                 }
             })
         })
@@ -372,6 +391,7 @@ function sortByID() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-up" onclick="removeSortID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -385,6 +405,7 @@ function sortByID() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -417,6 +438,7 @@ function sortByCountry() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -430,6 +452,7 @@ function sortByCountry() {
         const row = `
         <tr>
             <td>${userData[i]["#"]}</td>
+            <td><img src="${userData[i].Image[0].url}"/></td>
             <td>${userData[i].Name}</td>
             <td>${userData[i].Email}</td>
             <td>${userData[i].Phone}</td>
@@ -462,6 +485,7 @@ function sortByPhone() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-up" onclick="removeSortPhone()"></i></th>
@@ -475,6 +499,7 @@ function sortByPhone() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -507,6 +532,7 @@ function sortByCity() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -520,6 +546,7 @@ function sortByCity() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -552,6 +579,7 @@ function sortByEmail() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-up" onclick="removeSortEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -565,6 +593,7 @@ function sortByEmail() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -597,6 +626,7 @@ function sortByName() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-up" onclick="removeSortName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="removeSortEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -610,6 +640,7 @@ function sortByName() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -642,6 +673,7 @@ function removeSortID() {
     `<table>
         <tr>
             <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th>Profile Image</th>
             <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
             <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
             <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -655,6 +687,7 @@ function removeSortID() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -685,6 +718,7 @@ function removeSortCountry() {
     userListTable.innerHTML = `<table>
     <tr>
       <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+      <th>Profile Image</th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -698,6 +732,7 @@ function removeSortCountry() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -728,6 +763,7 @@ function removeSortCity() {
     userListTable.innerHTML = `<table>
     <tr>
       <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+      <th>Profile Image</th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -741,6 +777,7 @@ function removeSortCity() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -771,6 +808,7 @@ function removeSortPhone() {
     userListTable.innerHTML = `<table>
     <tr>
       <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+      <th>Profile Image</th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -784,6 +822,7 @@ function removeSortPhone() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -814,6 +853,7 @@ function removeSortEmail() {
     userListTable.innerHTML = `<table>
     <tr>
       <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+      <th>Profile Image</th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -827,6 +867,7 @@ function removeSortEmail() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -857,6 +898,7 @@ function removeSortName() {
     userListTable.innerHTML = `<table>
     <tr>
       <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+      <th>Profile Image</th>
       <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
       <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
       <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
@@ -870,6 +912,7 @@ function removeSortName() {
         const row = `
             <tr>
                 <td>${userData[i]["#"]}</td>
+                <td><img src="${userData[i].Image[0].url}"/></td>
                 <td>${userData[i].Name}</td>
                 <td>${userData[i].Email}</td>
                 <td>${userData[i].Phone}</td>
@@ -899,11 +942,11 @@ const updateAddress = document.getElementById("updateaddress");
 const updateCountry = document.getElementById("updatecountry");
 function editUser(e) {
     let values = e.parentNode.children;
-    updateName.value = values[1].innerText;
-    updateEmail.value = values[2].innerText;
-    updatePhone.value = values[3].innerText;
-    updateAddress.value = values[4].innerText;
-    updateCountry.value = values[5].innerText;
+    updateName.value = values[2].innerText;
+    updateEmail.value = values[3].innerText;
+    updatePhone.value = values[4].innerText;
+    updateAddress.value = values[5].innerText;
+    updateCountry.value = values[6].innerText;
     updateUserContainer.style.display = "block";
 }
 
@@ -941,11 +984,19 @@ updateUserForm.addEventListener("submit", async (e) => {
 
 // Search filter for country
 const searchCountryInput = document.getElementById("searchCountry");
-searchCountryInput.addEventListener("input", () => {
+const searchCountry = debounce(() => search());
+function debounce(f, timeout = 300) {
+    let timer;
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {f.apply(this, args);}, timeout);
+    };
+}
+function search() {
     const rows = document.getElementsByTagName("tr");
     let i;
     for(i = 1; i < rows.length; i++) {
-        if(rows[i].children[5].innerText.toString().toLowerCase().startsWith(searchCountryInput.value.toString().toLowerCase())) {
+        if(rows[i].children[6].innerText.toString().toLowerCase().startsWith(searchCountryInput.value.toString().toLowerCase())) {
             rows[i].style.display = "";
         } else {
            rows[i].style.display = "none";
@@ -956,5 +1007,6 @@ searchCountryInput.addEventListener("input", () => {
             rows[i].style.display = "";
         }
     }
-});
+}
+searchCountryInput.addEventListener("input", searchCountry);
 // END - Search filter for country
