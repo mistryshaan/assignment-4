@@ -82,6 +82,8 @@ signupForm.addEventListener("submit", (e) => {
 
     getUsers();
 
+    document.getElementById("userName").innerText = username.value;
+
     username.value = "";
     email.value = "";
     password.value = "";
@@ -90,7 +92,6 @@ signupForm.addEventListener("submit", (e) => {
     country.value = "";
 
     userList.style.display = "flex";
-    document.getElementById("userName").innerText = username.value;
     signupContainer.style.display = "none"
 
 });
@@ -310,7 +311,6 @@ addUserForm.addEventListener("submit", async (e) => {
         setTimeout(() => message.style.display = "none", 2000);
     } else {
         message.style.display = "none";
-        console.log(document.getElementById("addimage").files[0]);
         let storeImage =  await fetch("https://www.filestackapi.com/api/store/S3?key=AEKNiDPBQYe9I6feOVqkAz", {
             method: "POST",
             body:  document.getElementById("addimage").files[0],

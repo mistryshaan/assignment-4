@@ -72,7 +72,13 @@
         </div>
         <div>
           <label for="phone">Phone</label>
-          <input type="tel" required id="phone" class="border-radius" />
+          <input
+            type="tel"
+            required
+            id="phone"
+            class="border-radius"
+            pattern="[1-9]{1}[0-9]{9}"
+          />
         </div>
         <div>
           <label for="address">City</label>
@@ -100,26 +106,32 @@
         <div onclick="closeAddUser()"><i class="fas fa-times"></i></div>
         <div>
           <label for="name">Name</label>
-          <input type="text" id="addname" class="border-radius" />
+          <input type="text" id="addname" class="border-radius" required />
         </div>
         <div>
           <label for="password">Email</label>
-          <input type="email" id="addemail" class="border-radius" />
+          <input type="email" id="addemail" class="border-radius" required />
         </div>
         <div>
           <label for="phone">Phone</label>
-          <input type="tel" id="addphone" class="border-radius" />
+          <input
+            type="tel"
+            id="addphone"
+            class="border-radius"
+            required
+            pattern="[1-9]{1}[0-9]{9}"
+          />
         </div>
         <div>
           <label for="address">City</label>
-          <input type="text" id="addaddress" class="border-radius" />
+          <input type="text" id="addaddress" class="border-radius" required />
         </div>
         <div>
           <label for="country">Country</label>
-          <input type="text" id="addcountry" class="border-radius" />
+          <input type="text" id="addcountry" class="border-radius" required />
         </div>
         <div>
-          <input type="file" id="addimage" class="borde-radius" />
+          <input type="file" id="addimage" class="borde-radius" required />
         </div>
         <div>
           <input
