@@ -1,5 +1,6 @@
 const homeContainer = document.getElementById("home");
 const userList = document.getElementById("userList");
+const userListTableContainer = document.getElementById("userListTable");
 const userListTable = document.getElementsByTagName("table")[0];
 const message = document.getElementById("message");
 const loginMessage = document.getElementById("loginMessage");
@@ -36,15 +37,6 @@ window.addEventListener("load", () => {
 
 // Sign Up
 const signupContainer = document.getElementById("signupContainer");
-function openSignup() {
-    signupContainer.style.display = "block";
-    homeContainer.style.display = "none";
-}
-function closeSignup() {
-    signupContainer.style.display = "none";
-    homeContainer.style.display = "flex";
-}
-
 const signupForm = document.getElementById("signup");
 const username = document.getElementById("name");
 const email = document.getElementById("email");
@@ -53,93 +45,201 @@ const phone = document.getElementById("phone");
 const address = document.getElementById("address");
 const country = document.getElementById("country");
 
+function openSignup() {
+    signupContainer.style.display = "block";
+    homeContainer.style.display = "none";
+}
+
+function closeSignup() {
+    signupContainer.style.display = "none";
+    homeContainer.style.display = "flex";
+    username.nextElementSibling.style.visibility = "hidden";
+    email.nextElementSibling.style.visibility = "hidden";
+    password.nextElementSibling.style.visibility = "hidden";
+    phone.nextElementSibling.style.visibility = "hidden";
+    address.nextElementSibling.style.visibility = "hidden";
+    country.nextElementSibling.style.visibility = "hidden";
+    username.style.borderColor = "#40189d";
+    email.style.borderColor = "#40189d";
+    password.style.borderColor = "#40189d";
+    phone.style.borderColor = "#40189d";
+    address.style.borderColor = "#40189d";
+    country.style.borderColor = "#40189d";
+
+}
+
 signupForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const admin = JSON.parse(localStorage.getItem("admin"));
-    if(admin === null) {
-        localStorage.setItem("admin", JSON.stringify([{
-            username: username.value, 
-            email: email.value,
-            password: password.value,
-            phone: phone.value,
-            address: address.value,
-            country: country.value,
-            status: "true"
-        }]));
-    } else {
-        admin.push({
-            username: username.value, 
-            email: email.value,
-            password: password.value,
-            phone: phone.value,
-            address: address.value,
-            country: country.value,
-            status: "true"
-        });
-        localStorage.setItem("admin", JSON.stringify(admin));
+    if(username.value === "" && email.value === "" && password.value === "" && phone.value === "" && address.value === "" && country.value === "") {
+        username.nextElementSibling.style.visibility = "visible";
+        email.nextElementSibling.style.visibility = "visible";
+        password.nextElementSibling.style.visibility = "visible";
+        phone.nextElementSibling.style.visibility = "visible";
+        address.nextElementSibling.style.visibility = "visible";
+        country.nextElementSibling.style.visibility = "visible";
     }
 
-    getUsers();
+    if(username.value === "") {
+        username.style.borderColor = "red";
+        username.nextElementSibling.style.visibility = "visible";
+    } else {
+        username.style.borderColor = "#40189d";
+        username.nextElementSibling.style.visibility = "hidden";
+    }
 
-    document.getElementById("userName").innerText = username.value;
+    if(email.value === "") {
+        email.style.borderColor = "red";
+        email.nextElementSibling.style.visibility = "visible";
+    } else {
+        email.style.borderColor = "#40189d"
+        email.nextElementSibling.style.visibility = "hidden";
+    }
 
-    username.value = "";
-    email.value = "";
-    password.value = "";
-    phone.value = "";
-    address.value = "";
-    country.value = "";
+    if(password.value === "") {
+        password.style.borderColor = "red";
+        password.nextElementSibling.style.visibility = "visible";
+    } else {
+        password.style.borderColor = "#40189d"
+        password.nextElementSibling.style.visibility = "hidden";
+    }
 
-    userList.style.display = "flex";
-    signupContainer.style.display = "none"
+    if(phone.value === "") {
+        phone.style.borderColor = "red";
+        phone.nextElementSibling.style.visibility = "visible";
+    } else {
+        phone.style.borderColor = "#40189d"
+        phone.nextElementSibling.style.visibility = "hidden";
+    }
 
+    if(address.value === "") {
+        address.style.borderColor = "red";
+        address.nextElementSibling.style.visibility = "visible";
+    } else {
+        address.style.borderColor = "#40189d"
+        address.nextElementSibling.style.visibility = "hidden";
+    }
+
+    if(country.value === "") {
+        country.style.borderColor = "red";
+        country.nextElementSibling.style.visibility = "visible";
+    } else {
+        country.style.borderColor = "#40189d"
+        country.nextElementSibling.style.visibility = "hidden";
+    }
+
+    if(username.value !== "" && email.value !== "" && password.value !== "" && phone.value !== "" && address.value !== "" && country.value !== "") {
+        const admin = JSON.parse(localStorage.getItem("admin"));
+        if(admin === null) {
+            localStorage.setItem("admin", JSON.stringify([{
+                username: username.value, 
+                email: email.value,
+                password: password.value,
+                phone: phone.value,
+                address: address.value,
+                country: country.value,
+                status: "true"
+            }]));
+        } else {
+            admin.push({
+                username: username.value, 
+                email: email.value,
+                password: password.value,
+                phone: phone.value,
+                address: address.value,
+                country: country.value,
+                status: "true"
+            });
+            localStorage.setItem("admin", JSON.stringify(admin));
+        }
+    
+        getUsers();
+    
+        document.getElementById("userName").innerText = username.value;
+    
+        username.value = "";
+        email.value = "";
+        password.value = "";
+        phone.value = "";
+        address.value = "";
+        country.value = "";
+    
+        userList.style.display = "flex";
+        signupContainer.style.display = "none"
+    }
 });
 // END - Sign Up
 
 // Login
 const loginContainer = document.getElementById("loginContainer");
-function openLogin() {
-    loginContainer.style.display = "block";
-    homeContainer.style.display = "none";
-}
-function closeLogin() {
-    loginContainer.style.display = "none";
-    homeContainer.style.display = "flex";
-}
-
 const loginForm = document.getElementById("login");
 const loginEmail = document.getElementById("loginEmail");
 const loginPassword = document.getElementById("loginPassword");
 const addUserContainer = document.getElementById("addUserContainer");
 
+function openLogin() {
+    loginContainer.style.display = "block";
+    homeContainer.style.display = "none";
+}
+
+function closeLogin() {
+    loginContainer.style.display = "none";
+    homeContainer.style.display = "flex";
+    loginEmail.value = "";
+    loginPassword.value = "";
+    loginEmail.nextElementSibling.style.visibility = "hidden";
+    loginPassword.nextElementSibling.style.visibility = "hidden";
+    loginEmail.style.borderColor = "#40189d";
+    loginPassword.style.borderColor = "#40189d";
+}
+
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const adminList = JSON.parse(localStorage.getItem("admin"));
-    if(adminList === null) {
-        loginMessage.style.display = "block";
-        loginMessage.innerText = "Please signup first.";
-        setTimeout(() => loginMessage.style.display = "none", 2000);
-    } else {
-        const adminEmail = adminList.map(current => current["email"]);
-        const adminPassword = adminList.map(current => current["password"]);
-        if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
-            loginContainer.style.display = "none";
-            userList.style.display = "flex";
-            adminList[0].status = "true";
-            localStorage.setItem("admin", JSON.stringify([adminList[0]]));
-            document.getElementById("userName").innerText = adminList[0].username;
-            getUsers();
-        } else {
-            loginMessage.style.display = "block";
-            loginMessage.innerText = "Invalid login credentials. Try again";
-            setTimeout(() => loginMessage.style.display = "none", 2000);
-        }
+    if(loginEmail.value === "" && loginPassword.value === "") {
+        loginEmail.nextElementSibling.style.visibility = "visible";
+        loginPassword.nextElementSibling.style.visibility = "visible";
     }
 
-    loginEmail.value = "";
-    loginPassword.value = "";
+    if(loginEmail.value === "") {
+        loginEmail.style.borderColor = "red";
+        loginEmail.nextElementSibling.style.visibility = "visible";
+    } else {
+        loginEmail.style.borderColor = "#40189d";
+        loginEmail.nextElementSibling.style.visibility = "hidden";
+    }
+
+    if(loginPassword.value === "") {
+        loginPassword.style.borderColor = "red";
+        loginPassword.nextElementSibling.style.visibility = "visible";
+    } else {
+        loginPassword.style.borderColor = "#40189d";
+        loginPassword.nextElementSibling.style.visibility = "hidden";
+    }
+
+    if(loginEmail.value !== "" && loginPassword.value !== "") {
+        const adminList = JSON.parse(localStorage.getItem("admin"));
+        if(adminList === null) {
+            loginMessage.style.visibility = "visible";
+            loginMessage.innerText = "Please signup first.";
+            setTimeout(() => loginMessage.style.visibility = "hidden", 2000);
+        } else {
+            const adminEmail = adminList.map(current => current["email"]);
+            const adminPassword = adminList.map(current => current["password"]);
+            if(adminEmail.includes(loginEmail.value) && adminPassword.includes(loginPassword.value)) {
+                loginContainer.style.display = "none";
+                userList.style.display = "flex";
+                adminList[0].status = "true";
+                localStorage.setItem("admin", JSON.stringify([adminList[0]]));
+                document.getElementById("userName").innerText = adminList[0].username;
+                getUsers();
+            } else {
+                loginMessage.style.visibility = "visible";
+                loginMessage.innerText = "Invalid login credentials. Try again";
+                setTimeout(() => loginMessage.style.visibility = "hidden", 2000);
+            }
+        }
+    }
 });
 // END - Login
 
@@ -300,68 +400,147 @@ function previousPage() {
 }
 
 // Add user
-function openaddUser() {
-    addUserContainer.style.display = "block";
-}
-
-function closeAddUser() {
-    addUserContainer.style.display = "none";
-    userList.style.display = "flex";
-}
-
 const addUserForm = document.getElementById("addUser");
 const addName = document.getElementById("addname");
 const addEmail = document.getElementById("addemail");
 const addPhone = document.getElementById("addphone");
 const addAddress = document.getElementById("addaddress");
 const addCountry = document.getElementById("addcountry");
+const addImage = document.getElementById("addimage");
+
+function openaddUser() {
+    addUserContainer.style.display = "block";
+}
+
+function closeAddUser() {
+    addUserContainer.style.display = "none";
+    addName.value = "";
+    addEmail.value = "";
+    addPhone.value = "";
+    addAddress.value = "";
+    addCountry.value = "";
+    userList.style.display = "flex";
+
+    addName.nextElementSibling.style.visibility = "hidden";
+    addEmail.nextElementSibling.style.visibility = "hidden";
+    addPhone.nextElementSibling.style.visibility = "hidden";
+    addAddress.nextElementSibling.style.visibility = "hidden";
+    addCountry.nextElementSibling.style.visibility = "hidden";
+    addImage.nextElementSibling.style.visibility = "hidden";
+    addName.style.borderColor = "#40189d";
+    addEmail.style.borderColor = "#40189d";
+    addPhone.style.borderColor = "#40189d";
+    addAddress.style.borderColor = "#40189d";
+    addCountry.style.borderColor = "#40189d";
+    addImage.style.borderColor = "#40189d";
+}
+
 addUserForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const emailList = userData.map(element => element.Email);
-    if(emailList.includes(addEmail.value)) {
-        message.style.display = "block";
-        message.innerHTML = "User alredy exists";
-        setTimeout(() => message.style.display = "none", 2000);
-    } else {
-        message.style.display = "none";
-        let storeImage =  await fetch("https://www.filestackapi.com/api/store/S3?key=AEKNiDPBQYe9I6feOVqkAz", {
-            method: "POST",
-            body:  document.getElementById("addimage").files[0],
-            headers: {
-                "Content-Type": "image/png"
-            }
-        })
-        .then(response => response.json())
-        let url = await storeImage.url;
-        console.log(url)
 
-        await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201`, {
-            method: "POST",
-            headers: {
-                "Authorization": "Bearer keyTnehojflD4HoP2",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "fields": {
-                    "#": `${userData.length + 1}`,
-                    "Name": `${addName.value}`,
-                    "Email": `${addEmail.value}`,
-                    "Phone": `${addPhone.value}`,
-                    "Address": `${addAddress.value}`,
-                    "Country": `${addCountry.value}`,
-                    "Image": [{
-                        "url": `${url}`
-                    }]
+    if(addEmail.value === "" && addName.value === "" && addPhone.value === "" && addAddress.value === "" && addCountry.value === "" && addImage.value === "") {
+        addName.nextElementSibling.style.visibility = "visible";
+        addEmail.nextElementSibling.style.visibility = "visible";
+        addPhone.nextElementSibling.style.visibility = "visible";
+        addAddress.nextElementSibling.style.visibility = "visible";
+        addCountry.nextElementSibling.style.visibility = "visible";
+        addImage.nextElementSibling.style.visibility = "visible";
+    }
+
+    if(addName.value === "") {
+        addName.nextElementSibling.style.visibility = "visible";
+        addName.style.borderColor = "red";
+    } else {
+        addName.nextElementSibling.style.visibility = "hidden";
+        addName.style.borderColor = "#40189d";
+    }
+
+    if(addEmail.value === "") {
+        addEmail.nextElementSibling.style.visibility = "visible";
+        addEmail.style.borderColor = "red";
+    } else {
+        addEmail.nextElementSibling.style.visibility = "hidden";
+        addEmail.style.borderColor = "#40189d";
+    }
+
+    if(addPhone.value === "") {
+        addPhone.nextElementSibling.style.visibility = "visible";
+        addPhone.style.borderColor = "red";
+    } else {
+        addPhone.nextElementSibling.style.visibility = "hidden";
+        addPhone.style.borderColor = "#40189d";
+    }
+
+    if(addAddress.value === "") {
+        addAddress.nextElementSibling.style.visibility = "visible";
+        addAddress.style.borderColor = "red";
+    } else {
+        addAddress.nextElementSibling.style.visibility = "hidden";
+        addAddress.style.borderColor = "#40189d";
+    }
+
+    if(addCountry.value === "") {
+        addCountry.nextElementSibling.style.visibility = "visible";
+        addCountry.style.borderColor = "red";
+    } else {
+        addCountry.nextElementSibling.style.visibility = "hidden";
+        addCountry.style.borderColor = "#40189d";
+    }
+
+    if(addImage.value === "") {
+        addImage.nextElementSibling.style.visibility = "visible";
+        addImage.style.borderColor = "red";
+    } else {
+        addImage.nextElementSibling.style.visibility = "hidden";
+        addImage.style.borderColor = "#40189d";
+    }
+
+    if(addEmail.value !== "" && addName.value !== "" && addPhone.value !== "" && addAddress.value !== "" && addCountry.value !== "" && addImage.value !== "") {
+        const emailList = userData.map(element => element.Email);
+        if(emailList.includes(addEmail.value)) {
+            message.style.display = "block";
+            message.innerHTML = "User alredy exists";
+            setTimeout(() => message.style.display = "none", 2000);
+        } else {
+            message.style.display = "none";
+            let storeImage =  await fetch("https://www.filestackapi.com/api/store/S3?key=AEKNiDPBQYe9I6feOVqkAz", {
+                method: "POST",
+                body:  document.getElementById("addimage").files[0],
+                headers: {
+                    "Content-Type": "image/png"
                 }
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            addUserContainer.style.display = "none";
-            location.reload();
-        })
-        .catch(err => console.log(err));
+            .then(response => response.json())
+            let url = await storeImage.url;
+    
+            await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer keyTnehojflD4HoP2",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    "fields": {
+                        "#": `${userData.length + 1}`,
+                        "Name": `${addName.value}`,
+                        "Email": `${addEmail.value}`,
+                        "Phone": `${addPhone.value}`,
+                        "Address": `${addAddress.value}`,
+                        "Country": `${addCountry.value}`,
+                        "Image": [{
+                            "url": `${url}`
+                        }]
+                    }
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                addUserContainer.style.display = "none";
+                location.reload();
+            })
+            .catch(err => console.log(err));
+        }
     }
 });
 // END - Add user
@@ -579,7 +758,7 @@ function closeUpdateUser() {
 
 updateUserForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    console.log(e.target.children[3].children[1].value);
+    document.getElementById("updateloader").style.display = "block";
     await fetch(`https://api.airtable.com/v0/appxzAIWceo3zsq84/Table%201/${userID.get(e.target.children[2].children[1].value)}`, {
         method: "PATCH",
         headers: {
@@ -598,8 +777,11 @@ updateUserForm.addEventListener("submit", async (e) => {
     })
     .then(response => response.json())
     .then(data => {
-        updateUserContainer.style.display = "none";
-        location.reload();
+        if(data !== null) {
+            updateUserContainer.style.display = "none";
+            document.getElementById("updateloader").style.display = "none";
+            location.reload();
+        }
     })
     .catch(error => console.log(error))
 });
@@ -618,13 +800,13 @@ function debounce(f, timeout = 300) {
 function search() {
     const rows = document.getElementsByTagName("tr");
     let i;
+    let flag = 1;
     for(i = 1; i < rows.length; i++) {
-        if(rows[i].children[6].innerText.toString().toLowerCase().startsWith(searchCountryInput.value.toString().toLowerCase())) {
-            rows[i].style.display = "";
-        } else {
-           rows[i].style.display = "none";
+        if(!rows[i].children[6].innerText.toString().toLowerCase().startsWith(searchCountryInput.value.toString().toLowerCase())) {
+            rows[i].style.display = "none";  
         }
     }
+
     if(searchCountryInput.value === "") {
         for(i = 1; i < rows.length; i++) {
             rows[i].style.display = "";
@@ -633,3 +815,44 @@ function search() {
 }
 searchCountryInput.addEventListener("input", searchCountry);
 // END - Search filter for country
+
+const updateAdminFormContainer = document.getElementById("adminFormContainer");
+const adminForm = document.getElementById("adminForm");
+const adminUpdateName = document.getElementById("adminname");
+const adminUpdateEmail = document.getElementById("adminemail");
+const adminUpdatePassword = document.getElementById("adminpassword");
+const adminUpdatePhone = document.getElementById("adminphone");
+const adminUpdateAddress = document.getElementById("adminaddress");
+const adminUpdateCountry = document.getElementById("admincountry");
+
+function openUpdateAdmin() {
+    updateAdminFormContainer.style.display = "block";
+    const adminData = JSON.parse(localStorage.getItem("admin"))[0];
+    adminUpdateName.value = adminData.username;
+    adminUpdateEmail.value = adminData.email;
+    adminUpdatePassword.value = adminData.password;
+    adminUpdatePhone.value = adminData.phone;
+    adminUpdateAddress.value = adminData.address;
+    adminUpdateCountry.value = adminData.country;
+}
+
+function closeUpdateAdmin() {
+    updateAdminFormContainer.style.display = "none";
+}
+
+adminForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const adminData = {
+        username: adminUpdateName.value,
+        email: adminUpdateEmail.value,
+        password: adminUpdatePassword.value,
+        phone: adminUpdatePhone.value,
+        address: adminUpdateAddress.value,
+        country: adminUpdateCountry.value,
+        status: "true"
+    }
+
+    localStorage.setItem("admin", JSON.stringify([adminData]));
+    location.reload();
+})

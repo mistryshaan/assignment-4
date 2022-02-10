@@ -64,11 +64,22 @@ img {
 }
 
 #message,
-#loginMessage {
+#loginMessage,
+#searchmessage {
   display: none;
   color: red;
   text-align: center;
   transition: 0.5s ease-in-out;
+}
+
+#loginMessage {
+  display: block;
+  visibility: hidden;
+}
+
+#searchmessage {
+  margin-top: 20px;
+  font-size: 1.5rem;
 }
 
 #loginMessage {
@@ -98,10 +109,11 @@ img {
 #loginContainer,
 #signupContainer,
 #addUserContainer,
-#updateUserContainer {
+#updateUserContainer,
+#adminFormContainer {
   display: none;
   width: 30%;
-  padding: 60px 40px;
+  padding: 40px;
   font-size: 1.1rem;
   box-shadow: 0 0 10px 10px #eaeaf0;
   position: fixed;
@@ -111,8 +123,13 @@ img {
   transition: 0.5s ease-in-out;
 }
 
+#admin {
+  cursor: pointer;
+}
+
 #addUserContainer,
-#updateUserContainer {
+#updateUserContainer,
+#adminFormContainer {
   background-color: white;
   z-index: 100;
 }
@@ -120,14 +137,16 @@ img {
 #login > div,
 #signup > div,
 #addUser > div,
-#updateUser > div {
-  margin-bottom: 2rem;
+#updateUser > div,
+#adminForm > div {
+  margin-bottom: 1rem;
 }
 
 #login > div:first-child,
 #signup > div:first-child,
 #addUser > div:first-child,
-#updateUser > div:first-child {
+#updateUser > div:first-child,
+#adminForm > div:first-child {
   text-align: right;
   color: #40189d;
   cursor: pointer;
@@ -144,10 +163,21 @@ img {
 #login label,
 #signup label,
 #addUser label,
-#updateUser label {
+#updateUser label,
+#adminForm label {
   display: block;
   margin-bottom: 5px;
   padding: 0 8px;
+}
+
+.signuperror,
+.loginerror,
+.addUserError {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 2px;
+  padding: 0 8px;
+  visibility: hidden;
 }
 
 #signup label:last-child,
@@ -183,7 +213,8 @@ img {
 #updateUserSubmitButton,
 #home button,
 #previousPageButton,
-#nextPageButton {
+#nextPageButton,
+#updateAdminSubmitButton {
   width: auto;
   padding: 8px 16px;
   background-color: #40189d;
@@ -193,7 +224,8 @@ img {
 
 #signupButton,
 #addUserSubmitButton,
-#updateUserSubmitButton {
+#updateUserSubmitButton,
+#updateAdminSubmitButton {
   width: 100%;
 }
 
@@ -300,13 +332,21 @@ img {
   margin-left: 10px;
 }
 
-#loader {
+#loader,
+#updateloader {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   border-top: 5px solid #40189d;
   animation: rotation 1s linear infinite;
   margin: 30px auto;
+}
+
+#updateloader {
+  display: none;
+  width: 30px;
+  height: 30px;
+  border-top: 2px solid #40189d;
 }
 
 @keyframes rotation {
@@ -334,6 +374,10 @@ img {
 #pagination button {
   width: auto;
   margin: 0 10px;
+}
+
+#pagination button:disabled:hover {
+  cursor: not-allowed;
 }
 
 /* END - User list */

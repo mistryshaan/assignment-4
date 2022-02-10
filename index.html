@@ -29,16 +29,13 @@
         <div onclick="closeLogin()"><i class="fas fa-times"></i></div>
         <div>
           <label for="email">Email</label>
-          <input type="email" required id="loginEmail" class="border-radius" />
+          <input type="email" id="loginEmail" class="border-radius" />
+          <p class="loginerror">Please fill email field</p>
         </div>
         <div>
           <label for="password">Password</label>
-          <input
-            type="password"
-            required
-            id="loginPassword"
-            class="border-radius"
-          />
+          <input type="password" id="loginPassword" class="border-radius" />
+          <p class="loginerror">Please fill passsword field</p>
         </div>
         <div>
           <input
@@ -60,33 +57,38 @@
         <div onclick="closeSignup()"><i class="fas fa-times"></i></div>
         <div>
           <label for="name">Name</label>
-          <input type="text" required id="name" class="border-radius" />
+          <input type="text" id="name" class="border-radius" />
+          <p class="signuperror">Please fill name field</p>
         </div>
         <div>
           <label for="email">Email</label>
-          <input type="email" required id="email" class="border-radius" />
+          <input type="email" id="email" class="border-radius" />
+          <p class="signuperror">Please fill email field</p>
         </div>
         <div>
           <label for="password">Password</label>
-          <input type="password" required id="password" class="border-radius" />
+          <input type="password" id="password" class="border-radius" />
+          <p class="signuperror">Please fill password field</p>
         </div>
         <div>
           <label for="phone">Phone</label>
           <input
             type="tel"
-            required
             id="phone"
             class="border-radius"
             pattern="[1-9]{1}[0-9]{9}"
           />
+          <p class="signuperror">Please fill phone field</p>
         </div>
         <div>
           <label for="address">City</label>
-          <input type="text" required id="address" class="border-radius" />
+          <input type="text" id="address" class="border-radius" />
+          <p class="signuperror">Please fill city field</p>
         </div>
         <div>
           <label for="country">Country</label>
-          <input type="text" required id="country" class="border-radius" />
+          <input type="text" id="country" class="border-radius" />
+          <p class="signuperror">Please fill country field</p>
         </div>
         <div>
           <input
@@ -106,11 +108,13 @@
         <div onclick="closeAddUser()"><i class="fas fa-times"></i></div>
         <div>
           <label for="name">Name</label>
-          <input type="text" id="addname" class="border-radius" required />
+          <input type="text" id="addname" class="border-radius" />
+          <p class="addUserError">Please fill name field</p>
         </div>
         <div>
           <label for="password">Email</label>
-          <input type="email" id="addemail" class="border-radius" required />
+          <input type="email" id="addemail" class="border-radius" />
+          <p class="addUserError">Please fill email field</p>
         </div>
         <div>
           <label for="phone">Phone</label>
@@ -118,20 +122,23 @@
             type="tel"
             id="addphone"
             class="border-radius"
-            required
             pattern="[1-9]{1}[0-9]{9}"
           />
+          <p class="addUserError">Please fill phone field</p>
         </div>
         <div>
           <label for="address">City</label>
-          <input type="text" id="addaddress" class="border-radius" required />
+          <input type="text" id="addaddress" class="border-radius" />
+          <p class="addUserError">Please fill city field</p>
         </div>
         <div>
           <label for="country">Country</label>
-          <input type="text" id="addcountry" class="border-radius" required />
+          <input type="text" id="addcountry" class="border-radius" />
+          <p class="addUserError">Please fill country field</p>
         </div>
         <div>
-          <input type="file" id="addimage" class="borde-radius" required />
+          <input type="file" id="addimage" class="border-radius" />
+          <p class="addUserError">Please add image</p>
         </div>
         <div>
           <input
@@ -148,11 +155,75 @@
 
     <!-- User list container -->
     <div id="userList">
-      <div>
+      <div id="admin" onclick="openUpdateAdmin()">
         <div id="userImage"><i class="fas fa-user-tie"></i></div>
         <div>
           <div id="userName"></div>
         </div>
+      </div>
+
+      <div id="adminFormContainer">
+        <form action="" id="adminForm" enctype="multipart/form-data">
+          <div onclick="closeUpdateAdmin()"><i class="fas fa-times"></i></div>
+          <div>
+            <label for="adminname">Name</label>
+            <input type="text" id="adminname" class="border-radius" required />
+          </div>
+          <div>
+            <label for="adminemail">Email</label>
+            <input
+              type="email"
+              id="adminemail"
+              class="border-radius"
+              required
+            />
+          </div>
+          <div>
+            <label for="adminpassword">Password</label>
+            <input
+              type="text"
+              id="adminpassword"
+              class="border-radius"
+              required
+            />
+          </div>
+          <div>
+            <label for="adminphone">Phone</label>
+            <input
+              type="tel"
+              id="adminphone"
+              class="border-radius"
+              required
+              pattern="[1-9]{1}[0-9]{9}"
+            />
+          </div>
+          <div>
+            <label for="adminaddress">City</label>
+            <input
+              type="text"
+              id="adminaddress"
+              class="border-radius"
+              required
+            />
+          </div>
+          <div>
+            <label for="admincountry">Country</label>
+            <input
+              type="text"
+              id="admincountry"
+              class="border-radius"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="submit"
+              value="Update"
+              id="updateAdminSubmitButton"
+              class="border-radius"
+            />
+          </div>
+        </form>
       </div>
 
       <div class="buttons">
@@ -201,6 +272,8 @@
           </tr>
         </table>
       </div>
+
+      <div id="searchmessage">No data</div>
 
       <div id="loader"></div>
 
@@ -262,6 +335,7 @@
           />
         </div>
       </form>
+      <div id="updateloader"></div>
     </div>
     <!-- END - Update user container -->
 

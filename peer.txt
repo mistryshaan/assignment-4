@@ -1,0 +1,10 @@
+Peer Review:
+
+Daxesh:
+1. Update form not containing proper details when clicking edit after sorting.
+2. User image integration.
+3. Message missing when no data found on search.
+
+Mohammad:
+1. Improper search result for country
+2. Pagination issue while sorting 
