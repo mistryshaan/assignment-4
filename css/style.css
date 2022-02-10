@@ -58,11 +58,6 @@ img {
   border-radius: 5px;
 }
 
-.fa-arrow-up,
-.fa-arrow-down {
-  cursor: pointer;
-}
-
 #message,
 #loginMessage,
 #searchmessage {
@@ -308,6 +303,10 @@ img {
 #userListTable table {
   width: 100%;
   padding: 10px;
+}
+
+#userListTable table th {
+  cursor: pointer;
 }
 
 #userListTable table th,

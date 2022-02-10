@@ -270,13 +270,13 @@ async function getUsers() {
 
     userListTable.innerHTML = 
     `<tr>
-        <th>#<i class="fas fa-arrow-down" onclick="removeSortID()"></i></th>
+        <th onclick="removeSortID()">#<i class="fas fa-arrow-down"></i></th>
         <th>Profile Image</th>
-        <th>Name<i class="fas fa-arrow-down" onclick="sortUp('Name')"></i></th>
-        <th>Email<i class="fas fa-arrow-down" onclick="sortUp('Email')"></i></th>
-        <th>Phone<i class="fas fa-arrow-down" onclick="sortUp('Phone')"></i></th>
-        <th>City<i class="fas fa-arrow-down" onclick="sortUp('Address')"></i></th>
-        <th>Country<i class="fas fa-arrow-down" onclick="sortUp('Country')"></i></th>
+        <th onclick="sortUp('Name')">Name<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortUp('Email')">Email<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortUp('Phone')">Phone<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortUp('Address')">City<i class="fas fa-arrow-down"></i></th>
+        <th onclick="sortUp('Country')">Country<i class="fas fa-arrow-down" ></i></th>
         <th>Action</th>
     </tr>`;
 
@@ -549,13 +549,14 @@ addUserForm.addEventListener("submit", async (e) => {
 function home() {
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#</th>
-      <th>Name<i class="fas fa-arrow-down" onclick="sortByName()"></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick="sortByEmail()"></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick="sortByPhone()"></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick="sortByCity()"></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick="sortByCountry()"></i></th>
-      <th>Action</th>
+        <th onclick="removeSortID()">#<i class="fas fa-arrow-down" ></i></th>
+        <th>Profile Image</th>
+        <th onclick="sortDown('Name')">Name<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Email')">Email<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Phone')">Phone<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Address')">City<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Country')">Country<i class="fas fa-arrow-down" ></i></th>
+        <th>Action</th>
     </tr>
   </table>`;
     userList.style.display = "none";
@@ -582,13 +583,13 @@ function sortByID() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="removeSortID()"></i></th>
+            <th onclick="removeSortID()">#<i class="fas fa-arrow-down" ></i></th>
             <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortDown('Name')"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortDown('Email')"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortDown('Phone')"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="sortDown('Address')"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="sortDown('Country')"></i></th>
+            <th onclick="sortDown('Name')">Name<i class="fas fa-arrow-down" ></i></th>
+            <th onclick="sortDown('Email')">Email<i class="fas fa-arrow-down" ></i></th>
+            <th onclick="sortDown('Phone')">Phone<i class="fas fa-arrow-down" ></i></th>
+            <th onclick="sortDown('Address')">City<i class="fas fa-arrow-down" ></i></th>
+            <th onclick="sortDown('Country')">Country<i class="fas fa-arrow-down" ></i></th>
             <th>Action</th>
         </tr>
     </table>`;
@@ -623,14 +624,14 @@ function removeSortID() {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-            <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick="sortDown('Name')"></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick="sortDown('Email')"></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick="sortDown('Phone')"></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick="sortDown('Address')"></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick="sortDown('Country')"></i></th>
-            <th>Action</th>
+        <th onclick="sortByID()">#<i class="fas fa-arrow-down" ></i></th>
+        <th>Profile Image</th>
+        <th onclick="sortDown('Name')">Name<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Email')">Email<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Phone')">Phone<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Address')">City<i class="fas fa-arrow-down" ></i></th>
+        <th onclick="sortDown('Country')">Country<i class="fas fa-arrow-down" ></i></th>
+        <th>Action</th>
         </tr>
     </table>`;
 
@@ -665,13 +666,13 @@ function sortUp(field) {
     userListTable.innerHTML = 
     `<table>
         <tr>
-            <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
+            <th onclick="sortByID()">#<i class="fas fa-arrow-down"></i></th>
             <th>Profile Image</th>
-            <th>Name<i class="fas fa-arrow-down" onclick=${field == 'Name' ? "sortDown('Name')" : "sortUp('Name')"}></i></th>
-            <th>Email<i class="fas fa-arrow-down" onclick=${field == 'Email' ? "sortDown('Email')" : "sortUp('Email')"}></i></th>
-            <th>Phone<i class="fas fa-arrow-down" onclick=${field == 'Phone' ? "sortDown('Phone')" : "sortUp('Phone')"}></i></th>
-            <th>City<i class="fas fa-arrow-down" onclick=${field == 'Address' ? "sortDown('Address')" : "sortUp('Address')"}></i></th>
-            <th>Country<i class="fas fa-arrow-down" onclick=${field == 'Country' ? "sortDown('Country')" : "sortUp('Country')"}></i></th>
+            <th onclick=${field == 'Name' ? "sortDown('Name')" : "sortUp('Name')"}>Name<i class="fas fa-arrow-down"></i></th>
+            <th onclick=${field == 'Email' ? "sortDown('Email')" : "sortUp('Email')"}>Email<i class="fas fa-arrow-down" ></i></th>
+            <th onclick=${field == 'Phone' ? "sortDown('Phone')" : "sortUp('Phone')"}>Phone<i class="fas fa-arrow-down" ></i></th>
+            <th onclick=${field == 'Address' ? "sortDown('Address')" : "sortUp('Address')"}>City<i class="fas fa-arrow-down" ></i></th>
+            <th onclick=${field == 'Country' ? "sortDown('Country')" : "sortUp('Country')"}>Country<i class="fas fa-arrow-down" ></i></th>
             <th>Action</th>
         </tr>
     </table>`;
@@ -705,14 +706,14 @@ function sortDown(field) {
     });
     userListTable.innerHTML = `<table>
     <tr>
-      <th>#<i class="fas fa-arrow-down" onclick="sortByID()"></i></th>
-      <th>Profile Image</th>
-      <th>Name<i class="fas fa-arrow-down" onclick=${field == 'Name' ? "sortUp('Name')" : "sortDown('Name')"}></i></th>
-      <th>Email<i class="fas fa-arrow-down" onclick=${field == 'Email' ? "sortUp('Email')" : "sortDown('Email')"}></i></th>
-      <th>Phone<i class="fas fa-arrow-down" onclick=${field == 'Phone' ? "sortUp('Phone')" : "sortDown('Phone')"}></i></th>
-      <th>City<i class="fas fa-arrow-down" onclick=${field == 'Address' ? "sortUp('Address')" : "sortDown('Address')"}></i></th>
-      <th>Country<i class="fas fa-arrow-down" onclick=${field == 'Country' ? "sortUp('Country')" : "sortDown('Country')"}></i></th>
-      <th>Action</th>
+        <th onclick="sortByID()">#<i class="fas fa-arrow-down"></i></th>
+        <th>Profile Image</th>
+        <th onclick=${field == 'Name' ? "sortUp('Name')" : "sortDown('Name')"}>Name<i class="fas fa-arrow-down"></i></th>
+        <th onclick=${field == 'Email' ? "sortUp('Email')" : "sortDown('Email')"}>Email<i class="fas fa-arrow-down" ></i></th>
+        <th onclick=${field == 'Phone' ? "sortUp('Phone')" : "sortDown('Phone')"}>Phone<i class="fas fa-arrow-down" ></i></th>
+        <th onclick=${field == 'Address' ? "sortUp('Address')" : "sortDown('Address')"}>City<i class="fas fa-arrow-down" ></i></th>
+        <th onclick=${field == 'Country' ? "sortUp('Country')" : "sortDown('Country')"}>Country<i class="fas fa-arrow-down" ></i></th>
+        <th>Action</th>
     </tr>
   </table>`;
 
