@@ -797,10 +797,10 @@ function debounce(f, timeout = 300) {
         timer = setTimeout(() => {f.apply(this, args);}, timeout);
     };
 }
+
 function search() {
     const rows = document.getElementsByTagName("tr");
     let i;
-    let flag = 1;
     for(i = 1; i < rows.length; i++) {
         if(!rows[i].children[6].innerText.toString().toLowerCase().startsWith(searchCountryInput.value.toString().toLowerCase())) {
             rows[i].style.display = "none";  
@@ -813,6 +813,7 @@ function search() {
         }
     }
 }
+
 searchCountryInput.addEventListener("input", searchCountry);
 // END - Search filter for country
 
