@@ -260,6 +260,8 @@ async function getUsers() {
             userID.set(record.fields.Email, record.id);
         });
         numberOfPage = Math.ceil(userData.length / 3);
+        document.getElementById("currentPageNumber").innerText = currentPage;
+        document.getElementById("totalNumberOfPage").innerText = numberOfPage;
     });
 
     if(userData !== null) {
@@ -305,7 +307,10 @@ function nextPage() {
         document.getElementById("nextPageButton").disabled = false;
         document.getElementById("previousPageButton").style.opacity = "1";
         document.getElementById("previousPageButton").disabled = false;
+
         currentPage++;
+        document.getElementById("currentPageNumber").innerText = currentPage;
+
         userListTable.innerHTML = 
             `<table>
                 <tr>
@@ -358,7 +363,10 @@ function previousPage() {
         document.getElementById("previousPageButton").disabled = false;
         document.getElementById("nextPageButton").style.opacity = "1";
         document.getElementById("nextPageButton").disabled = false;
+
         currentPage--;
+        document.getElementById("currentPageNumber").innerText = currentPage;
+        
         userListTable.innerHTML = 
             `<table>
                 <tr>
